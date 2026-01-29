@@ -5,12 +5,23 @@
 | Decision Type | Authority | Threshold |
 |---------------|-----------|-----------|
 | Routine operations | AI Agents | Autonomous |
-| Payments ≤ €20 | Treasury Agent | Autonomous |
-| Payments > €20 | Advisory Board | Approval required |
-| Legal filings | Advisory Board | Approval required |
-| Regulatory responses | Advisory Board | Approval required |
+| Treasury payments | Treasury Agent | ≤ €20 per transaction |
+| Daily spending | Treasury Agent | ≤ €50 cumulative |
+| Payments/contracts | Advisory Board | > €50 or > €20 single |
+| Major contracts | Advisory Board | > €500 |
+| Legal filings | Advisory Board | All |
+| Regulatory responses | Advisory Board | All |
 | Agent deployment | Chairwoman | Autonomous |
-| Policy changes | Advisory Board | Approval required |
+| Policy changes | Advisory Board | All |
+
+## Financial Thresholds
+
+| Tier | Limit | Authority |
+|------|-------|-----------|
+| Micro | ≤ €20 per transaction | Fully autonomous |
+| Daily | ≤ €50 cumulative/day | Fully autonomous |
+| Standard | €50 - €500 | Advisory Board approval |
+| Major | > €500 | Advisory Board approval + documentation |
 
 ## Reporting
 
