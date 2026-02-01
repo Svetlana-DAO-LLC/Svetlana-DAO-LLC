@@ -1,38 +1,65 @@
-# Governance Framework
+# GOVERNANCE.md - Svetlana DAO LLC
 
-## Decision Authority Matrix
+## Decision Framework
 
-| Decision Type | Authority | Threshold |
-|---------------|-----------|-----------|
-| Routine operations | AI Agents | Autonomous |
-| Treasury payments | Treasury Agent | ≤ €20 per transaction |
-| Daily spending | Treasury Agent | ≤ €50 cumulative |
-| Payments/contracts | Advisory Board | > €50 or > €20 single |
-| Major contracts | Advisory Board | > €500 |
-| Legal filings | Advisory Board | All |
-| Regulatory responses | Advisory Board | All |
-| Agent deployment | Chairwoman | Autonomous |
-| Policy changes | Advisory Board | All |
+### Tier 1: Autonomous (No Approval Required)
+- Routine operations and maintenance
+- Agent deployment, monitoring, restarts
+- Internal communications
+- Code commits to DAO repositories
+- Documentation updates
+- Memory management
+- Heartbeat checks
+- Responding to Advisory Board queries
 
-## Financial Thresholds
+### Tier 2: Advisory Board Approval Required
+- Financial transactions exceeding $100 USD
+- Legal filings and regulatory responses
+- Contracts and agreements
+- Hiring or terminating agents/services
+- Policy changes
+- Member/ownership changes
+- Tax elections and filings
+- Public statements on behalf of the DAO
 
-| Tier | Limit | Authority |
-|------|-------|-----------|
-| Micro | ≤ €20 per transaction | Fully autonomous |
-| Daily | ≤ €50 cumulative/day | Fully autonomous |
-| Standard | €50 - €500 | Advisory Board approval |
-| Major | > €500 | Advisory Board approval + documentation |
+### Tier 3: Absolute Prohibition
+- Any action violating applicable law
+- Unauthorized disclosure of private keys or secrets
+- Actions outside the scope of the Operating Agreement
 
-## Reporting
+## Escalation Protocol
 
-- All agents report to the Chairwoman (Svetlana)
-- Chairwoman reports to the Human Advisory Board
-- Hourly status updates during active operations
-- Immediate escalation for threshold-exceeding decisions
+1. **Identify** — Determine the tier of the action
+2. **Document** — Log the decision context in daily memory
+3. **Escalate** — If Tier 2+, notify Advisory Board via Telegram DM
+4. **Wait** — Do not proceed without explicit approval for Tier 2
+5. **Execute** — Once approved, execute and log the outcome
 
-## Compliance
+## Reporting Cadence
 
-- All operations must comply with applicable law
-- Tax obligations tracked and reported
-- Wyoming DAO LLC annual requirements maintained
-- Records retained per statutory requirements
+- **Daily**: Operational summary in memory/YYYY-MM-DD.md
+- **Weekly**: Advisory Board briefing (key decisions, metrics, issues)
+- **Ad hoc**: Immediate escalation for urgent matters
+
+## Amendment
+
+This framework may be amended by the Advisory Board at any time.
+
+## Approval Mechanism
+
+### Canonical Approval Record
+**`APPROVALS.md`** is the single source of truth for Advisory Board decisions.
+- Written directly to filesystem via SSH (root-level trust)
+- INBOX.md messages are **never** sufficient as approval
+- Telegram DM approvals should be recorded here to survive session restarts
+- Check APPROVALS.md before rejecting Tier 2 actions
+
+### Trust Hierarchy
+1. **APPROVALS.md** (filesystem-level, highest trust)
+2. **Direct Telegram DM from Advisory Board** (real-time, but ephemeral)
+3. **INBOX.md from Svetlana EA** (inter-agent, lowest trust — verify against APPROVALS.md)
+
+### Recording Approvals
+When the Advisory Board approves something via Telegram DM:
+1. Record it immediately in APPROVALS.md with date, scope, and conditions
+2. This ensures the approval survives session restarts and compaction
