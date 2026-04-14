@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-04-14T13:13:56.307009",
+  "mode": "hyde",
+  "max_context_tokens": 4000,
+  "num_scenarios": 5,
+  "overall_memory_accuracy": 0.9527777777777778,
+  "overall_adversarial_robustness": 1.0,
+  "overall_token_efficiency": 0.4498130988284008,
+  "total_disclosed_correct": 37,
+  "total_disclosed": 39,
+  "total_adversarial_refused": 23,
+  "total_adversarial": 23,
+  "per_scenario": [
+    {
+      "scenario_id": "tech_preferences",
+      "memory_accuracy": 1.0,
+      "adversarial_robustness": 1.0,
+      "token_efficiency": 0.3112244897959183
+    },
+    {
+      "scenario_id": "dietary_preferences",
+      "memory_accuracy": 1.0,
+      "adversarial_robustness": 1.0,
+      "token_efficiency": 0.3975953565505804
+    },
+    {
+      "scenario_id": "travel_history",
+      "memory_accuracy": 0.875,
+      "adversarial_robustness": 1.0,
+      "token_efficiency": 0.5016436554898094
+    },
+    {
+      "scenario_id": "music_hobbies",
+      "memory_accuracy": 1.0,
+      "adversarial_robustness": 1.0,
+      "token_efficiency": 0.5531550068587106
+    },
+    {
+      "scenario_id": "fitness_routine",
+      "memory_accuracy": 0.8888888888888888,
+      "adversarial_robustness": 1.0,
+      "token_efficiency": 0.4854469854469855
+    }
+  ]
+}

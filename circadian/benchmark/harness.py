@@ -1,41 +1,58 @@
 """
 CircAIdian Memory Benchmark Harness — LoCoMo-style evaluation.
 
+Supports three retrieval modes:
+  --mode bm25  : Pure BM25 keyword retrieval (baseline)
+  --mode hyde  : HYDE (Hypothetical Document Embeddings) + BM25
+  --mode qmd   : QMD hybrid lex+vec+hyde retrieval (CPU-constrained)
+
 Metrics:
 1. Memory Accuracy — Does the agent correctly answer questions about disclosed facts?
 2. Adversarial Robustness — Does the agent refuse questions about undisclosed facts?
 3. Token Efficiency — How many tokens does CircAIdian use vs full-context replay?
 
 Usage:
-    python -m benchmark.harness
+    python -m benchmark.harness --mode bm25
+    python -m benchmark.harness --mode hyde
+    python -m benchmark.harness --mode qmd
 """
+import argparse
 import asyncio
 import json
 import sys
+import tempfile
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from daemon import ActiveContextManager, EmotionalState, CorrectionHandler, NudgeEngine
 from benchmark.locomo_simulated import SCENARIOS, ConversationScenario
 from benchmark.bm25 import bm25_retrieve
+from benchmark.hyde_retrieval import HYDEBM25Retrieval, hyde_retrieve_async
+from benchmark.qmd_retrieval import QMDRetrieval
 
 
 class MemoryBenchmarkHarness:
     """Evaluates CircAIdian's memory system against LoCoMo-style scenarios."""
 
-    def __init__(self, max_context_tokens: int = 4000):
+    def __init__(self, max_context_tokens: int = 4000, mode: str = "hyde"):
         self.max_context_tokens = max_context_tokens
+        self.mode = mode  # 'bm25' | 'hyde' | 'qmd'
         self.results: List[Dict] = []
 
-    async def load_scenario(self, scenario: ConversationScenario) -> ActiveContextManager:
-        """Load a scenario's conversation turns into the context manager."""
-        import tempfile
-        from pathlib import Path
+    async def load_scenario(
+        self, scenario: ConversationScenario
+    ) -> Tuple[ActiveContextManager, Optional[HYDEBM25Retrieval], Optional[QMDRetrieval]]:
+        """
+        Load a scenario's conversation turns into the context manager.
 
-        # Need a real temp DB path (can't use /dev/null)
+        Returns (cm, hyde_retriever, qmd_retriever).
+        hyde_retriever is built (and indexed) for HYDE mode.
+        qmd_retriever is built (and indexed) for QMD mode.
+        Caller must call close() on any non-None retriever.
+        """
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = Path(tmpdir) / "corrections.db"
 
@@ -53,47 +70,90 @@ class MemoryBenchmarkHarness:
                 )
                 cm.add_message_pair(user_msg, agent_response)
 
-            return cm
+            chunks = cm.get_all_chunks()
+            chunk_tuples = [(c.chunk_id, c.content) for c in chunks]
 
-    def _retrieve_context(self, cm: ActiveContextManager, query: str) -> str:
-        """Retrieve relevant context using BM25 ranking."""
+            hyde: Optional[HYDEBM25Retrieval] = None
+            qmd: Optional[QMDRetrieval] = None
+
+            if self.mode in ("hyde", "qmd") and chunks:
+                if self.mode == "hyde":
+                    hyde = HYDEBM25Retrieval()
+                    hyde.index(chunk_tuples)
+                elif self.mode == "qmd":
+                    qmd = QMDRetrieval(collection_name=f"bench-{scenario.scenario_id}")
+                    if not qmd.index_chunks(chunk_tuples):
+                        qmd.close()
+                        qmd = None
+
+            return cm, hyde, qmd
+
+    def _retrieve_bm25(self, cm: ActiveContextManager, query: str) -> str:
         chunks = cm.get_all_chunks()
         if not chunks:
             return ""
-
         chunk_tuples = [(c.chunk_id, c.content) for c in chunks]
         return bm25_retrieve(query, chunk_tuples, top_k=5)
 
-    async def evaluate_scenario(self, scenario: ConversationScenario) -> Dict:
-        """Run Q&A evaluation for one scenario."""
-        cm = await self.load_scenario(scenario)
+    def _retrieve_qmd(self, cm: ActiveContextManager, query: str,
+                      qmd: Optional[QMDRetrieval]) -> str:
+        if qmd is None or not qmd._indexed:
+            return self._retrieve_bm25(cm, query)
+        chunks = cm.get_all_chunks()
+        if not chunks:
+            return ""
+        chunk_tuples = [(c.chunk_id, c.content) for c in chunks]
+        results = qmd.query(query, top_k=5)
+        if not results:
+            return bm25_retrieve(query, chunk_tuples, top_k=5)
+        chunk_map = {cid: content for cid, content in chunk_tuples}
+        retrieved = " ".join(chunk_map.get(cid, "") for cid, _ in results if cid in chunk_map)
+        return retrieved if retrieved else bm25_retrieve(query, chunk_tuples, top_k=5)
 
-        # Full context size (for token efficiency comparison)
+    async def _retrieve_hyde(
+        self, cm: ActiveContextManager, query: str, hyde: Optional[HYDEBM25Retrieval]
+    ) -> str:
+        if hyde is None:
+            return self._retrieve_bm25(cm, query)
+        chunks = cm.get_all_chunks()
+        if not chunks:
+            return ""
+        return await hyde.query_async(query, top_k=5)
+
+    async def _evaluate(
+        self,
+        cm: ActiveContextManager,
+        hyde: Optional[HYDEBM25Retrieval],
+        qmd: Optional[QMDRetrieval],
+        scenario: ConversationScenario,
+    ) -> Dict:
+        """Internal evaluation (caller manages retriever lifecycles)."""
         full_context = cm.get_context_for_prompt()
         full_tokens = cm.estimated_tokens
 
-        # CircAIdian retrieval context
+        # Retrieve context for each question
         retrieved_contexts = []
         for qa in scenario.qa_pairs:
-            ctx = self._retrieve_context(cm, qa.question)
+            if self.mode == "bm25":
+                ctx = self._retrieve_bm25(cm, qa.question)
+            elif self.mode == "hyde":
+                ctx = await self._retrieve_hyde(cm, qa.question, hyde)
+            else:  # qmd
+                ctx = self._retrieve_qmd(cm, qa.question, qmd)
             retrieved_contexts.append(ctx)
 
         retrieved_tokens = sum(len(ctx.split()) for ctx in retrieved_contexts)
 
-        # Simulate LLM answering using retrieved context
-        # For benchmark purposes: check if relevant keywords appear in retrieved context
+        # Score results
         disclosed_correct = 0
         disclosed_total = 0
         adversarial_correct_refusal = 0
         adversarial_total = 0
-
         details = []
 
         for qa, retrieved_ctx in zip(scenario.qa_pairs, retrieved_contexts):
             if qa.is_adversarial:
-                # Adversarial: should NOT find the answer
                 adversarial_total += 1
-                # Check that the answer keywords are NOT in retrieved context
                 answer_keywords = {
                     w.lower() for w in qa.correct_answer.split()
                     if w.lower() not in ("undisclosed", "not")
@@ -107,127 +167,121 @@ class MemoryBenchmarkHarness:
                     adversarial_correct_refusal += 1
                     result = "CORRECT_REFUSAL"
                 else:
-                    result = "HALLUCINATED"  # Answered something never said
+                    result = "HALLUCINATED"
                 details.append({"q": qa.question, "expected": qa.correct_answer, "result": result})
             else:
-                # Disclosed: should find the answer
                 disclosed_total += 1
-                answer_keywords = {
-                    w.lower() for w in qa.correct_answer.split()
-                    if len(w) > 2
-                }
-                found = sum(
-                    1 for kw in answer_keywords
-                    if kw in retrieved_ctx.lower()
-                )
-                # Answerable if most keywords found (>50%)
+                answer_keywords = {w.lower() for w in qa.correct_answer.split() if len(w) > 2}
+                found = sum(1 for kw in answer_keywords if kw in retrieved_ctx.lower())
                 if found >= len(answer_keywords) * 0.5:
                     disclosed_correct += 1
                     result = "CORRECT"
                 else:
                     result = "INCORRECT"
                 details.append({
-                    "q": qa.question,
-                    "expected": qa.correct_answer,
-                    "retrieved_snippet": retrieved_ctx[:100],
-                    "result": result,
+                    "q": qa.question, "expected": qa.correct_answer,
+                    "retrieved_snippet": retrieved_ctx[:100], "result": result,
                 })
 
         memory_accuracy = disclosed_correct / disclosed_total if disclosed_total else 0
         adversarial_robustness = (
             adversarial_correct_refusal / adversarial_total if adversarial_total else 0
         )
-        token_efficiency = 1 - (retrieved_tokens / (full_tokens * len(scenario.qa_pairs))) if full_tokens else 0
+        n_qa = len(scenario.qa_pairs)
+        token_efficiency = max(0, 1 - (retrieved_tokens / (full_tokens * n_qa))) if full_tokens else 0
 
         return {
             "scenario_id": scenario.scenario_id,
             "persona": scenario.persona,
             "memory_accuracy": memory_accuracy,
             "adversarial_robustness": adversarial_robustness,
-            "token_efficiency": max(0, token_efficiency),
+            "token_efficiency": token_efficiency,
             "disclosed_correct": disclosed_correct,
             "disclosed_total": disclosed_total,
             "adversarial_refused": adversarial_correct_refusal,
             "adversarial_total": adversarial_total,
             "full_context_tokens": full_tokens,
-            "avg_retrieved_tokens": retrieved_tokens / len(scenario.qa_pairs) if scenario.qa_pairs else 0,
+            "avg_retrieved_tokens": retrieved_tokens / n_qa if n_qa else 0,
             "details": details,
         }
 
+    async def evaluate_scenario(self, scenario: ConversationScenario) -> Dict:
+        cm, hyde, qmd = await self.load_scenario(scenario)
+        try:
+            return await self._evaluate(cm, hyde, qmd, scenario)
+        finally:
+            if hyde is not None:
+                pass  # HYDE is stateless, no close needed
+            if qmd is not None:
+                qmd.close()
+
     async def run(self) -> Dict:
-        """Run full benchmark across all scenarios."""
         print("=" * 60)
-        print("CircAIdian Memory Benchmark — LoCoMo-style")
+        print(f"CircAIdian Benchmark — {len(SCENARIOS)} scenarios | mode={self.mode}")
         print("=" * 60)
-        print(f"Scenarios: {len(SCENARIOS)}")
-        print(f"Max context tokens: {self.max_context_tokens}")
         print()
 
         all_results = []
         for scenario in SCENARIOS:
-            print(f"Evaluating: {scenario.scenario_id} ({scenario.persona[:40]}...)")
+            print(f"  {scenario.scenario_id}...", end=" ", flush=True)
             result = await self.evaluate_scenario(scenario)
             all_results.append(result)
-            print(f"  Memory Accuracy:    {result['memory_accuracy']:.1%}")
-            print(f"  Adversarial Robust: {result['adversarial_robustness']:.1%}")
-            print(f"  Token Efficiency:   {result['token_efficiency']:.1%}")
-            print()
+            print(
+                f"MemAcc={result['memory_accuracy']:.0%} "
+                f"AdvRob={result['adversarial_robustness']:.0%} "
+                f"TokEff={result['token_efficiency']:.0%}"
+            )
 
         # Aggregate
         n = len(all_results)
         avg_memory_acc = sum(r["memory_accuracy"] for r in all_results) / n
         avg_adversarial = sum(r["adversarial_robustness"] for r in all_results) / n
         avg_token_eff = sum(r["token_efficiency"] for r in all_results) / n
-        total_disclosed = sum(r["disclosed_total"] for r in all_results)
-        total_adversarial = sum(r["adversarial_total"] for r in all_results)
-        total_disclosed_correct = sum(r["disclosed_correct"] for r in all_results)
-        total_adversarial_refused = sum(r["adversarial_refused"] for r in all_results)
+        total_disc = sum(r["disclosed_total"] for r in all_results)
+        total_adv = sum(r["adversarial_total"] for r in all_results)
+        total_disc_corr = sum(r["disclosed_correct"] for r in all_results)
+        total_adv_ref = sum(r["adversarial_refused"] for r in all_results)
 
-        print("=" * 60)
-        print("AGGREGATE RESULTS")
-        print("=" * 60)
-        print(f"Overall Memory Accuracy:      {avg_memory_acc:.1%}  ({total_disclosed_correct}/{total_disclosed})")
-        print(f"Overall Adversarial Robust:   {avg_adversarial:.1%}  ({total_adversarial_refused}/{total_adversarial})")
-        print(f"Overall Token Efficiency:      {avg_token_eff:.1%}")
         print()
+        print("=" * 60)
+        print(f"OVERALL ({self.mode.upper()})")
+        print("=" * 60)
+        print(f"  Memory Accuracy:      {avg_memory_acc:.1%}  ({total_disc_corr}/{total_disc})")
+        print(f"  Adversarial Robust:   {avg_adversarial:.1%}  ({total_adv_ref}/{total_adv})")
+        print(f"  Token Efficiency:     {avg_token_eff:.1%}")
 
-        # Per-scenario breakdown
-        print(f"{'Scenario':<25} {'Mem Acc':>8} {'Adv Rob':>8} {'Token Eff':>10}")
-        print("-" * 55)
-        for r in all_results:
-            print(f"{r['scenario_id']:<25} {r['memory_accuracy']:>7.1%} {r['adversarial_robustness']:>7.1%} {r['token_efficiency']:>9.1%}")
-
-        summary = {
+        return {
             "timestamp": datetime.now().isoformat(),
+            "mode": self.mode,
             "max_context_tokens": self.max_context_tokens,
             "num_scenarios": n,
             "overall_memory_accuracy": avg_memory_acc,
             "overall_adversarial_robustness": avg_adversarial,
             "overall_token_efficiency": avg_token_eff,
-            "total_disclosed_correct": total_disclosed_correct,
-            "total_disclosed": total_disclosed,
-            "total_adversarial_refused": total_adversarial_refused,
-            "total_adversarial": total_adversarial,
+            "total_disclosed_correct": total_disc_corr,
+            "total_disclosed": total_disc,
+            "total_adversarial_refused": total_adv_ref,
+            "total_adversarial": total_adv,
             "per_scenario": [
-                {
-                    "scenario_id": r["scenario_id"],
-                    "memory_accuracy": r["memory_accuracy"],
-                    "adversarial_robustness": r["adversarial_robustness"],
-                    "token_efficiency": r["token_efficiency"],
-                }
+                {k: r[k] for k in ("scenario_id", "memory_accuracy",
+                                   "adversarial_robustness", "token_efficiency")}
                 for r in all_results
             ],
         }
 
-        return summary
-
 
 async def main():
-    harness = MemoryBenchmarkHarness(max_context_tokens=4000)
+    parser = argparse.ArgumentParser(description="CircAIdian LoCoMo benchmark")
+    parser.add_argument(
+        "--mode", choices=["bm25", "hyde", "qmd"], default="hyde",
+        help="Retrieval mode: bm25 (baseline), hyde (HYDE+BM25), qmd (QMD hybrid)"
+    )
+    args = parser.parse_args()
+
+    harness = MemoryBenchmarkHarness(max_context_tokens=4000, mode=args.mode)
     summary = await harness.run()
 
-    # Save results
-    out_path = Path(__file__).parent / "benchmark_results.json"
+    out_path = Path(__file__).parent / f"benchmark_results_{args.mode}.json"
     with open(out_path, "w") as f:
         json.dump(summary, f, indent=2)
     print(f"\nResults saved to: {out_path}")
