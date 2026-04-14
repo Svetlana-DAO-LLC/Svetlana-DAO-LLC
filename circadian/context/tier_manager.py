@@ -106,6 +106,13 @@ class ActiveContextManager:
         )
         self.tiers[ContextTier.PINNED].append(chunk)
 
+    def get_all_chunks(self) -> List[ContextChunk]:
+        """Return all chunks across all tiers as a list."""
+        all_chunks = []
+        for tier_chunks in self.tiers.values():
+            all_chunks.extend(tier_chunks)
+        return all_chunks
+
     def get_context_for_prompt(self) -> str:
         chunks = []
         tokens_used = 0
