@@ -3,7 +3,11 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from typing import Dict, Optional
-import pytz
+from zoneinfo import ZoneInfo
+
+# Default sleep hours — configurable via CircadianConfig
+DEFAULT_SLEEP_START = 23
+DEFAULT_SLEEP_END = 7
 
 class IdleState(Enum):
     ACTIVE = "active"
@@ -51,12 +55,13 @@ class EmotionalState:
             self.valence = EmotionalValence.NEGATIVE
             self.energy = max(0.0, self.energy - intensity * 0.1)
     
-    def check_sleeping(self, tz: str = "Europe/Berlin") -> bool:
+    def check_sleeping(self, tz: str = "Europe/Berlin",
+                        sleep_start: int = DEFAULT_SLEEP_START,
+                        sleep_end: int = DEFAULT_SLEEP_END) -> bool:
         try:
-            berlin = pytz.timezone(tz)
+            berlin = ZoneInfo(tz)
             now = datetime.now(berlin)
             current_hour = now.hour
-            sleep_start, sleep_end = 23, 7
             if current_hour >= sleep_start or current_hour < sleep_end:
                 return True
             return False

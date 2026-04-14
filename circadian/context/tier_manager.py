@@ -36,15 +36,22 @@ class ContextChunk:
         return len(self.content) // 4
 
 class ActiveContextManager:
+    # Tuning constants
+    ONE_HOUR = 3600
+    TEN_MINUTES = 600
+    ENTITY_RECENCY_WEIGHT = 0.2
+    ACCESS_BOOST_MAX = 0.05
+
+    _CORRECTION_PATTERNS = (
+        "not claude", "not chatgpt", "not anthropic", "don't have claude",
+        "no, it's", "actually it's", "wait, it's", "correction:",
+    )
+
     def __init__(self, max_context_tokens: int = 16000):
         self.max_tokens = max_context_tokens
         self.tiers: Dict[ContextTier, List[ContextChunk]] = {t: [] for t in ContextTier}
         self.entity_recency: Dict[str, datetime] = {}
         self.current_task: str = ""
-        self._correction_patterns = [
-            "not claude", "not chatgpt", "not anthropic", "don't have claude",
-            "no, it's", "actually it's", "wait, it's", "correction:",
-        ]
 
     @property
     def pinned_chunks(self) -> List[ContextChunk]:
@@ -60,11 +67,11 @@ class ActiveContextManager:
 
     def add(self, chunk: ContextChunk) -> None:
         content_lower = chunk.content.lower()
-        if any(p in content_lower for p in self._correction_patterns):
+        if any(p in content_lower for p in self._CORRECTION_PATTERNS):
             chunk.is_correction = True
             chunk.pinned = True
             chunk.tier = ContextTier.PINNED
-        elif any(kw in content_lower for kw in ["prefer", "always", "never", "don't", "user", "michael"]):
+        elif any(kw in content_lower for kw in ["prefer", "always", "never", "don't", "user"]):
             chunk.is_preference = True
             chunk.pinned = True
             chunk.tier = ContextTier.PINNED
@@ -131,11 +138,11 @@ class ActiveContextManager:
                 for entity in chunk.entity_tags:
                     if entity in self.entity_recency:
                         seconds_ago = (now - self.entity_recency[entity]).total_seconds()
-                        recency_score = max(0, 1 - seconds_ago / 3600)
-                        entity_recency_boost = max(entity_recency_boost, recency_score * 0.2)
+                        recency_score = max(0, 1 - seconds_ago / self.ONE_HOUR)
+                        entity_recency_boost = max(entity_recency_boost, recency_score * self.ENTITY_RECENCY_WEIGHT)
                 score += entity_recency_boost
             seconds_since_access = (now - chunk.last_accessed).total_seconds()
-            access_boost = max(0, 0.05 * (1 - seconds_since_access / 600))
+            access_boost = max(0, self.ACCESS_BOOST_MAX * (1 - seconds_since_access / self.TEN_MINUTES))
             score += access_boost
             return min(score, 1.0)
         return sorted(chunks, key=composite_score, reverse=True)

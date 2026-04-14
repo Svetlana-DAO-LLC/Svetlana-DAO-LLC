@@ -1,12 +1,13 @@
 """CorrectionHandler — Detects corrections and writes them to SOUL.md"""
 import asyncio
+import logging
 import re
+import shutil
 import sqlite3
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, List
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -73,15 +74,18 @@ class CorrectionHandler:
         logger.info(f"Initialized corrections DB at {self.db_path}")
     
     async def process_observation(self, session_id: str, user_msg: str, agent_output: str, soul_content: str):
-        detected = self._detect_correction(user_msg)
-        if detected:
-            detected.session_id = session_id
-            detected.timestamp = datetime.now()
-            detected = self._check_soul_contradiction(detected, soul_content)
-            async with self._lock:
-                self._pending_corrections.append(detected)
-            await self._log_correction(detected)
-            logger.info(f"Detected correction: {detected.wrong_claim} -> {detected.correction}")
+        try:
+            detected = self._detect_correction(user_msg)
+            if detected:
+                detected.session_id = session_id
+                detected.timestamp = datetime.now()
+                detected = self._check_soul_contradiction(detected, soul_content)
+                async with self._lock:
+                    self._pending_corrections.append(detected)
+                await self._log_correction(detected)
+                logger.info(f"Detected correction: {detected.wrong_claim} -> {detected.correction}")
+        except Exception as e:
+            logger.exception(f"Error in process_observation: {e}")
     
     def _detect_correction(self, text: str) -> Optional[Correction]:
         if not text or len(text.strip()) < 5:
@@ -169,7 +173,6 @@ class CorrectionHandler:
         try:
             current_content = self.soul_path.read_text()
             backup_path = self.soul_path.with_suffix(".md") + f".backup.{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-            import shutil
             shutil.copy2(str(self.soul_path), str(backup_path))
             logger.info(f"Created SOUL backup at {backup_path}")
             updated_content = self._apply_correction(current_content, correction)
@@ -196,8 +199,10 @@ class CorrectionHandler:
                 if in_section and wrong_lower in line.lower():
                     if line.strip().startswith("- "):
                         result_lines.append(f"- {correct}")
-                        continue
-                result_lines.append(line)
+                    else:
+                        result_lines.append(line)
+                else:
+                    result_lines.append(line)
         else:
             for line in lines:
                 if wrong_lower not in line.lower():

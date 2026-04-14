@@ -1,16 +1,20 @@
 """Nudge engine — surfaces insights to main agent"""
 import asyncio
+import logging
+import uuid
 from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-from typing import List, Optional
+from typing import List
+
+logger = logging.getLogger(__name__)
 
 class NudgePriority(Enum):
-    LOW = 0.3
-    MEDIUM = 0.6
-    HIGH = 0.8
-    CRITICAL = 0.95
+    LOW = 1
+    MEDIUM = 2
+    HIGH = 3
+    CRITICAL = 4
 
 class NudgeCategory(Enum):
     MEMORY_CONSOLIDATION = "memory_consolidation"
@@ -34,7 +38,6 @@ class Nudge:
     
     def __post_init__(self):
         if not self.nudge_id:
-            import uuid
             self.nudge_id = str(uuid.uuid4())[:8]
 
 class NudgeEngine:
@@ -44,7 +47,7 @@ class NudgeEngine:
         self._high_priority_pending: List[Nudge] = []
         self._lock = asyncio.Lock()
     
-    async def enqueue(self, nudge: Nudge, priority_override: Optional[float] = None) -> None:
+    async def enqueue(self, nudge: Nudge, priority_override: int = None) -> None:
         if priority_override is not None:
             nudge.priority = NudgePriority(priority_override)
         async with self._lock:
@@ -70,7 +73,7 @@ class NudgeEngine:
         )
         await self.enqueue(nudge)
     
-    async def get_next(self) -> Optional[Nudge]:
+    async def get_next(self) -> Nudge:
         async with self._lock:
             if self._high_priority_pending:
                 nudge = self._high_priority_pending.pop(0)
