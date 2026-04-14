@@ -12,14 +12,22 @@ from typing import Optional, List
 logger = logging.getLogger(__name__)
 
 CORRECTION_PATTERNS = [
-    # Primary: "you use X not Y" or "X not Y" with strong correction context
-    (r"(?i)(?:no|nope|nah)[,,\s]+(?:it'?s|that)?\s*(?:not\s+)?([^,]+?)\s*,?\s*(?:it'?s|but|actually|wait)\s+(.+)", "explicit_negation"),
-    (r"(?i)(?:it'?s|that)\s+not\s+([^,]+?)\s*[,]\s*(?:it'?s|but|actually|is|was)\s+(.+)", "explicit_negation_2"),
-    (r"(?i)actually[:\s]+(?:it'?s|it|they?)?\s*(?:not\s+)?(.+?)\s*[,]\s*(?:not\s+)?(.+)", "actually"),
-    (r"(?i)wait[:,.\s]+.*?(?:you\s+use|you\s+have|you\s+do)?\s*(\w+)\s+not\s+(\w+)", "wait_use"),
-    (r"(?i)i meant[:\s]+(?:to\s+)?(?:say\s+)?(?:that\s+)?(.+?)\s*[,]\s*(?:not\s+)?(.+)", "i_meant"),
-    (r"(?i)correction[:\s]+(.+?)\s*[,]\s*(?:not\s+)?(.+)", "correction"),
-    (r"(?i)(?:you'?re?|that)?\s*(?:wrong|incorrect|mistaken)[:\s]+(?:it'?s|it|they?)?\s*(?:not\s+)?(.+?)\s*[,]\s*(?:it'?s|is|was|should\s+be)\s+(.+)", "wrong"),
+    # "No, it's Claude Code, not OpenCode" — 2 groups: wrong, correct
+    (r"(?i)^no[,]\s+it's\s+(.+?),\s+not\s+(.+)$", "no_comma_not", 2),
+    # "No, it's Claude Code that's wrong" — 1 group: wrong; correction is "not that"
+    (r"(?i)^no[,]\s+it's\s+(.+?)\s+that's?\s+wrong$", "no_its_wrong", 1),
+    # "No, it's not Claude Code, it's OpenCode" — 2 groups: wrong, correct
+    (r"(?i)^no[,]\s+it's\s+not\s+(.+?)[,]\s+it's\s+(.+)$", "no_its_not_its", 2),
+    # "Actually it's X, not Y" — 2 groups: wrong, correct
+    (r"(?i)^actually\s+it's\s+(.+?),\s+not\s+(.+)$", "actually_its_not", 2),
+    # "Wait, you use X not Y" / "Wait, I meant to say you use X not Y"
+    (r"(?i)wait.*?you\s+use\s+(.+?)\s+not\s+(.+)", "wait_use", 2),
+    # "i meant X, not Y" or "i meant X not Y" — 2 groups
+    (r"(?i)^i\s+meant[:\s]+(?:to\s+)?(?:say\s+)?(?:that\s+)?(.+?)[,\s]+not\s+(.+)$", "i_meant", 2),
+    # "correction: X, not Y" — 2 groups: wrong, correct
+    (r"(?i)^correction[:\s]+(.+?),\s+not\s+(.+)$", "correction", 2),
+    # "you're wrong: it's X, it's Y" or "wrong: it's X not Y" — 2 groups
+    (r"(?i)^(?:you're|you're|that)?\s*wrong[:\s]+it's\s+(.+?)(?:,\s*it's\s+|\s+not\s+)(.+)$", "wrong_its", 2),
 ]
 
 @dataclass
@@ -91,26 +99,41 @@ class CorrectionHandler:
         if not text or len(text.strip()) < 5:
             return None
         text = text.strip()
-        for pattern, pattern_name in CORRECTION_PATTERNS:
+        for pattern, pattern_name, expected_groups in CORRECTION_PATTERNS:
             match = re.search(pattern, text)
             if match:
                 groups = match.groups()
-                if len(groups) >= 2:
+                if len(groups) != expected_groups:
+                    continue
+                if expected_groups == 1:
+                    wrong = groups[0].strip()
+                    correct = f"not {wrong}"
+                elif pattern_name in ("no_comma_not", "no_its_not_its", "actually_its_not",
+                                       "wait_use", "i_meant", "correction"):
+                    # "No, it's X not Y" / "X not Y" — X is the new claim, Y is the rejected claim
+                    wrong = groups[1].strip()
+                    correct = groups[0].strip()
+                else:
                     wrong = groups[0].strip()
                     correct = groups[1].strip()
-                    if wrong.lower() == correct.lower():
-                        continue
-                    confidence_map = {
-                        "explicit_negation": 0.9, "explicit_negation_2": 0.9,
-                        "actually": 0.8, "wait_use": 0.85, "i_meant": 0.85,
-                        "correction": 0.95, "wrong": 0.85,
-                    }
-                    confidence = confidence_map.get(pattern_name, 0.7)
-                    return Correction(
-                        session_id="", timestamp=datetime.now(),
-                        wrong_claim=wrong, correction=correct,
-                        source="user_direct", confidence=confidence,
-                    )
+                if wrong.lower() == correct.lower():
+                    continue
+                confidence_map = {
+                    "no_comma_not": 0.9,
+                    "no_its_not_its": 0.9,
+                    "no_its_wrong": 0.85,
+                    "actually_its_not": 0.8,
+                    "wait_use": 0.85,
+                    "i_meant": 0.85,
+                    "correction": 0.95,
+                    "wrong_its": 0.85,
+                }
+                confidence = confidence_map.get(pattern_name, 0.7)
+                return Correction(
+                    session_id="", timestamp=datetime.now(),
+                    wrong_claim=wrong, correction=correct,
+                    source="user_direct", confidence=confidence,
+                )
         return None
     
     def _check_soul_contradiction(self, correction: Correction, soul_content: str) -> Correction:

@@ -1,13 +1,14 @@
-"""Emotional state and circadian config for CircAIdian"""
+"""Emotional state — no config duplication; import CircadianConfig from config/__init__.py"""
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-from typing import Dict, Optional
+from typing import Optional
 from zoneinfo import ZoneInfo
 
-# Default sleep hours — configurable via CircadianConfig
+# Default sleep hours — overridden by CircadianConfig when running as daemon
 DEFAULT_SLEEP_START = 23
 DEFAULT_SLEEP_END = 7
+
 
 class IdleState(Enum):
     ACTIVE = "active"
@@ -16,11 +17,13 @@ class IdleState(Enum):
     SLEEPING = "sleeping"
     FOCUS = "focus"
 
+
 class EmotionalValence(Enum):
     POSITIVE = "positive"
     NEUTRAL = "neutral"
     NEGATIVE = "negative"
     UNCERTAIN = "uncertain"
+
 
 @dataclass
 class EmotionalState:
@@ -35,7 +38,7 @@ class EmotionalState:
     corrections_processed_today: int = 0
     idle_state: IdleState = IdleState.ACTIVE
     consecutive_errors: int = 0
-    
+
     def update_from_observation(self, observation_type: str, intensity: float = 0.5):
         if observation_type == "correction_received":
             self.arousal = min(1.0, self.arousal + intensity * 0.1)
@@ -54,7 +57,7 @@ class EmotionalState:
         elif observation_type == "user_negative":
             self.valence = EmotionalValence.NEGATIVE
             self.energy = max(0.0, self.energy - intensity * 0.1)
-    
+
     def check_sleeping(self, tz: str = "Europe/Berlin",
                         sleep_start: int = DEFAULT_SLEEP_START,
                         sleep_end: int = DEFAULT_SLEEP_END) -> bool:
@@ -67,7 +70,7 @@ class EmotionalState:
             return False
         except Exception:
             return False
-    
+
     def compute_idle_state(self, idle_thresholds: tuple = (300, 1800)) -> IdleState:
         now = datetime.now()
         seconds_idle = (now - self.last_user_activity).total_seconds()
@@ -80,12 +83,12 @@ class EmotionalState:
             return IdleState.IDLE_SHORT
         else:
             return IdleState.IDLE_LONG
-    
+
     def reset_daily_counters(self):
         self.dream_count_today = 0
         self.nudge_count_today = 0
         self.corrections_processed_today = 0
-    
+
     def to_dict(self) -> dict:
         return {
             "valence": self.valence.value,
@@ -99,21 +102,3 @@ class EmotionalState:
             "corrections_processed_today": self.corrections_processed_today,
             "consecutive_errors": self.consecutive_errors,
         }
-
-@dataclass  
-class CircadianConfig:
-    timezone: str = "Europe/Berlin"
-    sleep_hours_start: int = 23
-    sleep_hours_end: int = 7
-    idle_thresholds: tuple = field(default_factory=lambda: (300, 1800))
-    dream_intensity: Dict[IdleState, int] = field(default_factory=lambda: {
-        IdleState.ACTIVE: 0,
-        IdleState.IDLE_SHORT: 1,
-        IdleState.IDLE_LONG: 3,
-        IdleState.SLEEPING: 10,
-        IdleState.FOCUS: 0,
-    })
-    correction_batch_interval: int = 60
-    idle_check_interval: int = 30
-    dream_cycle_interval: int = 300
-    heartbeat_interval: int = 60

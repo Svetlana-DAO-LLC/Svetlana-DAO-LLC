@@ -2,6 +2,7 @@
 import json
 import logging
 import os
+import sqlite3
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -10,13 +11,11 @@ from aiohttp import web
 
 logger = logging.getLogger(__name__)
 
-# Auth token — set via CIRCADIAN_API_TOKEN env var. If unset, auth is disabled.
 _API_TOKEN = os.getenv("CIRCADIAN_API_TOKEN")
 _ALLOWED_SOUL_DIR = Path("/home/hermes/.hermes").resolve()
 
 
 class ApiError(Exception):
-    """Structured API error with HTTP status."""
     def __init__(self, status: int, message: str):
         self.status = status
         self.message = message
@@ -24,7 +23,6 @@ class ApiError(Exception):
 
 
 def _validate_soul_path(env_var_path: str) -> Path:
-    """Resolve soul path from env var and validate it's within allowed directory."""
     raw = Path(env_var_path).expanduser().resolve()
     if ".." in env_var_path:
         raise ApiError(400, "Invalid soul path: '..' not allowed")
@@ -34,20 +32,17 @@ def _validate_soul_path(env_var_path: str) -> Path:
 
 
 def _json_response(success: bool, data=None, error: str = None) -> dict:
-    """Standardized JSON response envelope."""
     return {"success": success, "data": data or {}, "error": error}
 
 
 async def _auth_middleware(app, handler):
-    """Auth middleware: checks X-Auth-Token if CIRCADIAN_API_TOKEN is set."""
     async def middleware(request):
         if _API_TOKEN:
             token = request.headers.get("X-Auth-Token", "")
             if token != _API_TOKEN:
-                logger.warning(f"Unauthorized request to {request.path} from {request.remote}")
+                logger.warning(f"Unauthorized request to {request.path}")
                 return web.json_response(
-                    _json_response(False, error="Unauthorized"),
-                    status=401
+                    _json_response(False, error="Unauthorized"), status=401
                 )
         return await handler(request)
     return middleware
@@ -64,9 +59,10 @@ class CircadianAPI:
         self.port = port
         self.app: Optional[web.Application] = None
         self._runner: Optional[web.AppRunner] = None
-    
+
     async def start(self):
         self.app = web.Application(middlewares=[_auth_middleware] if _API_TOKEN else [])
+        self.app.router.add_get("/", self.handle_root)
         self.app.router.add_post("/observe", self.handle_observe)
         self.app.router.add_post("/correction", self.handle_correction)
         self.app.router.add_post("/preference", self.handle_preference)
@@ -75,21 +71,31 @@ class CircadianAPI:
         self.app.router.add_get("/state", self.handle_state)
         self.app.router.add_get("/context", self.handle_context)
         self.app.router.add_get("/health", self.handle_health)
+        self.app.router.add_get("/corrections", self.handle_list_corrections)
+        self.app.router.add_delete("/corrections/{correction_id}", self.handle_delete_correction)
         self._runner = web.AppRunner(self.app)
         await self._runner.setup()
         site = web.TCPSite(self._runner, self.host, self.port)
         await site.start()
         logger.info(f"CircAIdian API started at http://{self.host}:{self.port}")
-    
+
     async def stop(self):
         if self._runner:
             await self._runner.cleanup()
 
     async def _read_soul_content(self) -> str:
-        """Read SOUL.md with path traversal protection."""
         env_path = os.getenv("CIRCADIAN_SOUL_PATH", "/home/hermes/.hermes/SOUL.md")
         soul_path = _validate_soul_path(env_path)
         return soul_path.read_text() if soul_path.exists() else ""
+
+    async def handle_root(self, request: web.Request) -> web.Response:
+        """Root endpoint — daemon info."""
+        return web.json_response(_json_response(True, {
+            "daemon": "CircAIdian",
+            "version": "0.1.0",
+            "status": "running",
+            "timestamp": datetime.now().isoformat(),
+        }))
 
     async def handle_observe(self, request: web.Request) -> web.Response:
         try:
@@ -204,5 +210,75 @@ class CircadianAPI:
     async def handle_health(self, request: web.Request) -> web.Response:
         return web.json_response(_json_response(True, {
             "status": "healthy",
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
         }))
+
+    async def handle_list_corrections(self, request: web.Request) -> web.Response:
+        """List recent corrections from the DB. ?limit=20&applied=0|1"""
+        try:
+            limit = int(request.query.get("limit", 20))
+            applied = request.query.get("applied")
+            db_path = self.correction_handler.db_path
+
+            conn = sqlite3.connect(str(db_path))
+            conn.row_factory = sqlite3.Row
+            cur = conn.execute(
+                "SELECT id, session_id, timestamp, wrong_claim, correction, source, "
+                "confidence, correction_type, applied, applied_at, notes "
+                "FROM corrections ORDER BY id DESC LIMIT ?",
+                (limit,)
+            )
+            rows = cur.fetchall()
+            conn.close()
+
+            corrections = []
+            for r in rows:
+                if applied is not None and str(r["applied"]) != applied:
+                    continue
+                corrections.append({
+                    "id": r["id"],
+                    "session_id": r["session_id"],
+                    "timestamp": r["timestamp"],
+                    "wrong_claim": r["wrong_claim"],
+                    "correction": r["correction"],
+                    "source": r["source"],
+                    "confidence": r["confidence"],
+                    "correction_type": r["correction_type"],
+                    "applied": bool(r["applied"]),
+                    "applied_at": r["applied_at"],
+                    "notes": r["notes"],
+                })
+            return web.json_response(_json_response(True, {"corrections": corrections}))
+        except Exception as e:
+            logger.exception(f"Error in /corrections: {e}")
+            return web.json_response(_json_response(False, error="Internal server error"), status=500)
+
+    async def handle_delete_correction(self, request: web.Request) -> web.Response:
+        """Delete/undo a specific correction by ID."""
+        try:
+            correction_id = int(request.match_info["correction_id"])
+            db_path = self.correction_handler.db_path
+
+            conn = sqlite3.connect(str(db_path))
+            cur = conn.execute(
+                "DELETE FROM corrections WHERE id = ? RETURNING wrong_claim, correction",
+                (correction_id,)
+            )
+            row = cur.fetchone()
+            conn.commit()
+            conn.close()
+
+            if not row:
+                return web.json_response(
+                    _json_response(False, error=f"Correction {correction_id} not found"),
+                    status=404
+                )
+            logger.info(f"Deleted correction {correction_id}: {row[0]} -> {row[1]}")
+            return web.json_response(_json_response(True, {
+                "deleted_id": correction_id,
+                "wrong_claim": row[0],
+                "correction": row[1],
+            }))
+        except Exception as e:
+            logger.exception(f"Error in DELETE /corrections/{request.match_info['correction_id']}: {e}")
+            return web.json_response(_json_response(False, error="Internal server error"), status=500)

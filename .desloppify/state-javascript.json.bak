@@ -1,0 +1,3852 @@
+{
+  "version": 3,
+  "created": "2026-04-13T05:39:41+00:00",
+  "last_scan": "2026-04-14T06:17:43+00:00",
+  "scan_count": 3,
+  "overall_score": 100.0,
+  "objective_score": 100.0,
+  "strict_score": 100.0,
+  "verified_strict_score": 100.0,
+  "stats": {
+    "total": 0,
+    "auto_resolved": 0,
+    "deferred": 0,
+    "false_positive": 0,
+    "fixed": 0,
+    "open": 0,
+    "triaged_out": 0,
+    "wontfix": 0,
+    "by_tier": {}
+  },
+  "work_items": {},
+  "scan_coverage": {
+    "javascript": {
+      "status": "reduced",
+      "confidence": 0.0,
+      "detectors": {
+        "eslint_warning": {
+          "detector": "eslint_warning",
+          "status": "reduced",
+          "confidence": 0.0,
+          "summary": "ESLint tooling unavailable (tool_failed_no_output)",
+          "impact": "Detector results may be under-reported for this scan.",
+          "remediation": "Install/fix the tool command and rerun scan.",
+          "tool": "ESLint",
+          "reason": "tool_failed_no_output"
+        },
+        "security": {
+          "detector": "security",
+          "status": "full",
+          "confidence": 1.0,
+          "summary": "Security coverage complete for enabled detectors.",
+          "impact": "",
+          "remediation": "",
+          "tool": "",
+          "reason": ""
+        }
+      },
+      "warnings": [
+        {
+          "detector": "eslint_warning",
+          "status": "reduced",
+          "confidence": 0.0,
+          "summary": "ESLint tooling unavailable (tool_failed_no_output)",
+          "impact": "Detector results may be under-reported for this scan.",
+          "remediation": "Install/fix the tool command and rerun scan.",
+          "tool": "ESLint",
+          "reason": "tool_failed_no_output"
+        }
+      ],
+      "updated_at": "2026-04-14T06:17:43+00:00"
+    }
+  },
+  "score_confidence": {},
+  "scan_metadata": {
+    "source": "scan"
+  },
+  "subjective_integrity": {
+    "status": "pass",
+    "target_score": 85.0,
+    "matched_count": 0,
+    "matched_dimensions": [],
+    "reset_dimensions": []
+  },
+  "subjective_assessments": {},
+  "scan_history": [
+    {
+      "timestamp": "2026-04-13T05:39:56+00:00",
+      "lang": "javascript",
+      "strict_score": 100.0,
+      "verified_strict_score": 100.0,
+      "objective_score": 100.0,
+      "overall_score": 100.0,
+      "open": 0,
+      "diff_new": 0,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 0,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": null,
+      "dimension_scores": null
+    },
+    {
+      "timestamp": "2026-04-13T07:26:39+00:00",
+      "lang": "javascript",
+      "strict_score": 100.0,
+      "verified_strict_score": 100.0,
+      "objective_score": 100.0,
+      "overall_score": 100.0,
+      "open": 0,
+      "diff_new": 0,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 0,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": null,
+      "dimension_scores": null
+    },
+    {
+      "timestamp": "2026-04-14T06:17:43+00:00",
+      "lang": "javascript",
+      "strict_score": 100.0,
+      "verified_strict_score": 100.0,
+      "objective_score": 100.0,
+      "overall_score": 100.0,
+      "open": 0,
+      "diff_new": 0,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_issues": 0,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 85.0
+      },
+      "score_confidence": null,
+      "dimension_scores": null
+    }
+  ],
+  "review_cache": {
+    "detectors": {
+      "boilerplate": {
+        "version": 1,
+        "fingerprint": "4eb5fdff35bed4e5ffc0a3356deeb83485eb4174",
+        "entries": [
+          {
+            "id": "0553f94813345013",
+            "distinct_files": 6,
+            "window_size": 13,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/javascript/tests/test_js_nextjs_framework.py",
+                "line": 14
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_concerns.py",
+                "line": 10
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_nextjs_framework.py",
+                "line": 25
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_props.py",
+                "line": 10
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_smells.py",
+                "line": 10
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_unused.py",
+                "line": 20
+              }
+            ],
+            "sample": [
+              "@pytest.fixture(autouse=True)",
+              "def _root(tmp_path, set_project_root):",
+              "    \"\"\"Point PROJECT_ROOT at the tmp directory via RuntimeContext.\"\"\"",
+              ""
+            ]
+          },
+          {
+            "id": "306158650d355be9",
+            "distinct_files": 5,
+            "window_size": 11,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/review/integration/test_review_commands.py",
+                "line": 5
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/integration/test_review_coverage.py",
+                "line": 5
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/integration/test_review_misc.py",
+                "line": 5
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/integration/test_review_submodules.py",
+                "line": 5
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/integration/test_work_queue.py",
+                "line": 5
+              }
+            ],
+            "sample": [
+              "as _cases",
+              "",
+              "for _name in dir(_cases):",
+              "    if not (_name.startswith(\"Test\") or _name.startswith(\"test_\")):"
+            ]
+          },
+          {
+            "id": "94d1eed0ea12ead9",
+            "distinct_files": 4,
+            "window_size": 10,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_confirmation.py",
+                "line": 3
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_fold_confirm.py",
+                "line": 3
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_jump_back.py",
+                "line": 3
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 3
+              }
+            ],
+            "sample": [
+              "from __future__ import annotations",
+              "",
+              "import argparse",
+              ""
+            ]
+          },
+          {
+            "id": "ff917c457315c4f7",
+            "distinct_files": 4,
+            "window_size": 16,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_attestation.py",
+                "line": 22
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_confirmation.py",
+                "line": 18
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_jump_back.py",
+                "line": 17
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 18
+              }
+            ],
+            "sample": [
+              "issues = {}",
+              "    for fid in ids:",
+              "        issues[fid] = {",
+              "            \"status\": \"open\","
+            ]
+          },
+          {
+            "id": "0338f57a1f41ff39",
+            "distinct_files": 3,
+            "window_size": 17,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_confirmation.py",
+                "line": 16
+              },
+              {
+                "file": "desloppify/desloppify/tests/plan/test_epic_triage_apply_edge_cases.py",
+                "line": 10
+              },
+              {
+                "file": "desloppify/desloppify/tests/plan/test_epic_triage_reconcile_and_migration.py",
+                "line": 10
+              }
+            ],
+            "sample": [
+              "def _state_with_review_issues(*ids: str) -> dict:",
+              "    \"\"\"Build minimal state with open review issues.\"\"\"",
+              "    issues = {}",
+              "    for fid in ids:"
+            ]
+          },
+          {
+            "id": "2411e2f21ec174d7",
+            "distinct_files": 3,
+            "window_size": 14,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/plan/test_auto_cluster_subjective_lifecycle.py",
+                "line": 87
+              },
+              {
+                "file": "desloppify/desloppify/tests/plan/test_stale_dimensions.py",
+                "line": 21
+              },
+              {
+                "file": "desloppify/desloppify/tests/plan/test_stale_policy.py",
+                "line": 51
+              }
+            ],
+            "sample": [
+              "dim_scores: dict = {}",
+              "    assessments: dict = {}",
+              "    for dim_key in dim_keys:",
+              "        dim_scores[dim_key] = {"
+            ]
+          },
+          {
+            "id": "585e7aefcdbc6b9e",
+            "distinct_files": 3,
+            "window_size": 30,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/test_coverage.py",
+                "line": 122
+              },
+              {
+                "file": "desloppify/desloppify/languages/go/test_coverage.py",
+                "line": 111
+              },
+              {
+                "file": "desloppify/desloppify/languages/php/test_coverage.py",
+                "line": 282
+              }
+            ],
+            "sample": [
+              "out: list[str] = []",
+              "    in_block = False",
+              "    in_string: str | None = None",
+              "    i = 0"
+            ]
+          },
+          {
+            "id": "6936b6476936f951",
+            "distinct_files": 3,
+            "window_size": 14,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_move_unified.py",
+                "line": 10
+              },
+              {
+                "file": "desloppify/desloppify/tests/plan/test_reconcile.py",
+                "line": 9
+              },
+              {
+                "file": "desloppify/desloppify/tests/plan/test_skip.py",
+                "line": 24
+              }
+            ],
+            "sample": [
+              "# ---------------------------------------------------------------------------",
+              "# Helpers",
+              "# ---------------------------------------------------------------------------",
+              ""
+            ]
+          },
+          {
+            "id": "7227c021c4e89f41",
+            "distinct_files": 3,
+            "window_size": 14,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/plan/test_auto_cluster_subjective_lifecycle.py",
+                "line": 57
+              },
+              {
+                "file": "desloppify/desloppify/tests/plan/test_stale_dimensions.py",
+                "line": 54
+              },
+              {
+                "file": "desloppify/desloppify/tests/plan/test_stale_policy.py",
+                "line": 81
+              }
+            ],
+            "sample": [
+              "dim_scores: dict = {}",
+              "    assessments: dict = {}",
+              "    for dim_key in dim_keys:",
+              "        dim_scores[dim_key] = {"
+            ]
+          },
+          {
+            "id": "7ee7b807bbe9b134",
+            "distinct_files": 3,
+            "window_size": 10,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/engine/_plan/commit_tracking.py",
+                "line": 29
+              },
+              {
+                "file": "desloppify/desloppify/engine/_plan/operations/meta.py",
+                "line": 34
+              },
+              {
+                "file": "desloppify/desloppify/engine/_plan/operations/skip.py",
+                "line": 40
+              }
+            ],
+            "sample": [
+              "}",
+              "    unknown = sorted(set(legacy_kwargs) - allowed_keys)",
+              "    if unknown:",
+              "        joined = \", \".join(unknown)"
+            ]
+          },
+          {
+            "id": "9fce70e4f2d963b1",
+            "distinct_files": 3,
+            "window_size": 11,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/detectors/smells_runtime.py",
+                "line": 270
+              },
+              {
+                "file": "desloppify/desloppify/languages/r/detectors/smells.py",
+                "line": 93
+              },
+              {
+                "file": "desloppify/desloppify/languages/rust/detectors/smells.py",
+                "line": 58
+              }
+            ],
+            "sample": [
+              ":",
+              "        matches = smell_counts[check[\"id\"]]",
+              "        if not matches:",
+              "            continue"
+            ]
+          },
+          {
+            "id": "ae96a6e57c87a3c2",
+            "distinct_files": 3,
+            "window_size": 7,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/_framework/treesitter/analysis/complexity_callbacks.py",
+                "line": 33
+              },
+              {
+                "file": "desloppify/desloppify/languages/_framework/treesitter/analysis/complexity_function_metrics.py",
+                "line": 18
+              },
+              {
+                "file": "desloppify/desloppify/languages/_framework/treesitter/analysis/complexity_nesting.py",
+                "line": 75
+              }
+            ],
+            "sample": [
+              "_cached_parser: dict[str, Any] = {}",
+              "",
+              "    def compute(content: str, lines: list[str], *, _filepath: str = \"\") -> tuple[int, str] | None:",
+              "        del content, lines"
+            ]
+          },
+          {
+            "id": "003356e8ac6c935c",
+            "distinct_files": 2,
+            "window_size": 23,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/detectors/coupling/test_coupling_cross_tool_imports.py",
+                "line": 17
+              },
+              {
+                "file": "desloppify/desloppify/tests/detectors/test_orphaned.py",
+                "line": 22
+              }
+            ],
+            "sample": [
+              "def _graph_entry(",
+              "    *,",
+              "    imports: set[str] | None = None,",
+              "    importer_count: int = 0,"
+            ]
+          },
+          {
+            "id": "033f286f96b81b7f",
+            "distinct_files": 2,
+            "window_size": 14,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_logs.py",
+                "line": 10
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_patterns.py",
+                "line": 14
+              }
+            ],
+            "sample": [
+              "@pytest.fixture(autouse=True)",
+              "def _root(set_project_root):",
+              "    \"\"\"Point PROJECT_ROOT at the tmp directory via RuntimeContext.\"\"\"",
+              ""
+            ]
+          },
+          {
+            "id": "0592c941370f7e70",
+            "distinct_files": 2,
+            "window_size": 22,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/show/test_cmd_show.py",
+                "line": 273
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/test_cmd_next.py",
+                "line": 368
+              }
+            ],
+            "sample": [
+              "\"subjective_integrity\": {",
+              "                    \"status\": \"penalized\",",
+              "                    \"target_score\": 95.0,",
+              "                    \"matched_count\": 2,"
+            ]
+          },
+          {
+            "id": "090035db01d4b10f",
+            "distinct_files": 2,
+            "window_size": 11,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_jump_back.py",
+                "line": 16
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 17
+              }
+            ],
+            "sample": [
+              ") -> dict:",
+              "    issues = {}",
+              "    for fid in ids:",
+              "        issues[fid] = {"
+            ]
+          },
+          {
+            "id": "096bbcabfbde826a",
+            "distinct_files": 2,
+            "window_size": 17,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/lang/csharp/test_csharp_deps.py",
+                "line": 269
+              },
+              {
+                "file": "desloppify/desloppify/tests/lang/csharp/test_csharp_scan.py",
+                "line": 210
+              }
+            ],
+            "sample": [
+              "]}).encode(",
+              "        \"utf-8\"",
+              "    )",
+              ""
+            ]
+          },
+          {
+            "id": "0adfac1a0902abec",
+            "distinct_files": 2,
+            "window_size": 17,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/test_coverage.py",
+                "line": 131
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/test_coverage.py",
+                "line": 244
+              }
+            ],
+            "sample": [
+              "))",
+              "",
+              "    for prod in production_set:",
+              "        prod_base = os.path.basename(prod)"
+            ]
+          },
+          {
+            "id": "0b46149bacb32128",
+            "distinct_files": 2,
+            "window_size": 60,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_confirmation.py",
+                "line": 12
+              },
+              {
+                "file": "desloppify/desloppify/tests/plan/test_epic_triage_apply.py",
+                "line": 13
+              }
+            ],
+            "sample": [
+              "# ---------------------------------------------------------------------------",
+              "# Helpers",
+              "# ---------------------------------------------------------------------------",
+              ""
+            ]
+          },
+          {
+            "id": "0be145ca79f9384a",
+            "distinct_files": 2,
+            "window_size": 12,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/deps/cli.py",
+                "line": 17
+              },
+              {
+                "file": "desloppify/desloppify/languages/csharp/detectors/deps_support_render.py",
+                "line": 41
+              }
+            ],
+            "sample": [
+              "if getattr(args, \"file\", None):",
+              "        coupling = get_coupling_score(args.file, graph)",
+              "        if getattr(args, \"json\", False):",
+              "            print(json.dumps({\"file\": rel(args.file), **coupling}, indent=2))"
+            ]
+          },
+          {
+            "id": "0f009e245fc91859",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/lang/common/test_lang_contract_validation.py",
+                "line": 14
+              },
+              {
+                "file": "desloppify/desloppify/tests/lang/common/test_lang_init.py",
+                "line": 382
+              }
+            ],
+            "sample": [
+              "],",
+              "        exclusions=[],",
+              "        default_src=\".\",",
+              "        build_dep_graph=lambda _p: {},"
+            ]
+          },
+          {
+            "id": "113524ad376e781a",
+            "distinct_files": 2,
+            "window_size": 16,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/_framework/node/js_text.py",
+                "line": 26
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/syntax/scanner.py",
+                "line": 18
+              }
+            ],
+            "sample": [
+              ":",
+              "                yield (i, ch, True)",
+              "                i += 1",
+              "                yield (i, text[i], True)"
+            ]
+          },
+          {
+            "id": "118cc53e97d16bff",
+            "distinct_files": 2,
+            "window_size": 14,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/phases_runtime.py",
+                "line": 63
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/phases_structural.py",
+                "line": 50
+              }
+            ],
+            "sample": [
+              ",",
+              "        file_finder=lang.file_finder,",
+              "        threshold=lang.complexity_threshold,",
+              "    )"
+            ]
+          },
+          {
+            "id": "137cdaf0b1ed2a49",
+            "distinct_files": 2,
+            "window_size": 19,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/test_transitive_modules.py",
+                "line": 889
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/test_transitive_modules_update_skill.py",
+                "line": 199
+              }
+            ],
+            "sample": [
+              "mock_download.side_effect = lambda f: {",
+              "            \"SKILL.md\": skill_content,",
+              "            \"WINDSURF.md\": \"windsurf overlay\",",
+              "        }[f]"
+            ]
+          },
+          {
+            "id": "143b91da9e5f9f77",
+            "distinct_files": 2,
+            "window_size": 12,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_patterns.py",
+                "line": 15
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_unused.py",
+                "line": 21
+              }
+            ],
+            "sample": [
+              "set_project_root):",
+              "    \"\"\"Point PROJECT_ROOT at the tmp directory via RuntimeContext.\"\"\"",
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "18d884ab96240375",
+            "distinct_files": 2,
+            "window_size": 51,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/javascript/test_coverage.py",
+                "line": 19
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/test_coverage.py",
+                "line": 18
+              }
+            ],
+            "sample": [
+              "= re.compile(",
+              "    r\"\"\"^export\\s+(?:\\{[^}]*\\}|\\*)\\s+from\\s+['\\\"]([^'\\\"]+)['\\\"]\"\"\", re.MULTILINE",
+              ")",
+              ""
+            ]
+          },
+          {
+            "id": "1aea2b7c9e9de6c5",
+            "distinct_files": 2,
+            "window_size": 21,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/review/test_work_queue_plan_order_and_triage.py",
+                "line": 161
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/work_queue_cases.py",
+                "line": 577
+              }
+            ],
+            "sample": [
+              "],",
+              "        dimension_scores={",
+              "            \"Naming quality\": {",
+              "                \"score\": 70.0,"
+            ]
+          },
+          {
+            "id": "1f0ca4a67b76f2dd",
+            "distinct_files": 2,
+            "window_size": 11,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/review/integration/test_work_queue.py",
+                "line": 5
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/test_work_queue.py",
+                "line": 5
+              }
+            ],
+            "sample": [
+              ". import work_queue_cases as _cases",
+              "",
+              "for _name in dir(_cases):",
+              "    if not (_name.startswith(\"Test\") or _name.startswith(\"test_\")):"
+            ]
+          },
+          {
+            "id": "2163d2bfbdbce359",
+            "distinct_files": 2,
+            "window_size": 16,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/deps/cli.py",
+                "line": 68
+              },
+              {
+                "file": "desloppify/desloppify/languages/csharp/detectors/deps_support_render.py",
+                "line": 94
+              }
+            ],
+            "sample": [
+              "in cycle[\"files\"]]}",
+              "                        for cycle in cycles",
+              "                    ],",
+              "                },"
+            ]
+          },
+          {
+            "id": "229431dd2ec35ba8",
+            "distinct_files": 2,
+            "window_size": 16,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_jump_back.py",
+                "line": 118
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 94
+              }
+            ],
+            "sample": [
+              ",",
+              "        extract_issue_citations=lambda text, ids: set(),",
+              "        build_triage_prompt=lambda si: \"prompt\",",
+              "    )"
+            ]
+          },
+          {
+            "id": "22d59dedc75a753c",
+            "distinct_files": 2,
+            "window_size": 5,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/dart/detectors/deps.py",
+                "line": 46
+              },
+              {
+                "file": "desloppify/desloppify/languages/dart/test_coverage.py",
+                "line": 78
+              }
+            ],
+            "sample": [
+              "package, rel_path = package_ref.split(\"/\", 1)",
+              "            if package_name and package == package_name:",
+              "                candidates.append((project_root / \"lib\" / rel_path).resolve())",
+              "    elif cleaned.startswith(\"./\") or cleaned.startswith(\"../\"):"
+            ]
+          },
+          {
+            "id": "26931f607846f681",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/lang/common/test_treesitter_analysis_direct.py",
+                "line": 23
+              },
+              {
+                "file": "desloppify/desloppify/tests/lang/common/test_treesitter_imports_direct.py",
+                "line": 24
+              }
+            ],
+            "sample": [
+              ",",
+              "        start_byte: int = 0,",
+              "        end_byte: int = 0,",
+              "    ) -> None:"
+            ]
+          },
+          {
+            "id": "2975c95074dd482c",
+            "distinct_files": 2,
+            "window_size": 16,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/_parse_helpers.py",
+                "line": 60
+              },
+              {
+                "file": "desloppify/desloppify/languages/dart/extractors.py",
+                "line": 44
+              }
+            ],
+            "sample": [
+              "in_string: str | None = None",
+              "    escape = False",
+              "",
+              "    for i in range(start_pos, len(content)):"
+            ]
+          },
+          {
+            "id": "2e46915c89011ca2",
+            "distinct_files": 2,
+            "window_size": 12,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/_framework/frameworks/phases.py",
+                "line": 67
+              },
+              {
+                "file": "desloppify/desloppify/languages/_framework/generic_parts/tool_factories.py",
+                "line": 48
+              }
+            ],
+            "sample": [
+              ":",
+              "            detector_coverage[detector] = dict(record)",
+              "",
+              "    coverage_warnings = getattr(lang, \"coverage_warnings\", None)"
+            ]
+          },
+          {
+            "id": "387aa7d084876161",
+            "distinct_files": 2,
+            "window_size": 10,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/test_cli.py",
+                "line": 380
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/test_transitive_engine.py",
+                "line": 395
+              }
+            ],
+            "sample": [
+              "assert args.prepare is False",
+              "        assert args.import_file is None",
+              "        assert args.validate_import_file is None",
+              "        assert args.external_start is False"
+            ]
+          },
+          {
+            "id": "39c3d9e98353638a",
+            "distinct_files": 2,
+            "window_size": 42,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_jump_back.py",
+                "line": 77
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 53
+              }
+            ],
+            "sample": [
+              "return plan",
+              "",
+              "",
+              "def _fake_runtime(state: dict):"
+            ]
+          },
+          {
+            "id": "3dcd7751a1e127b0",
+            "distinct_files": 2,
+            "window_size": 18,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/_framework/base/shared_phases_structural.py",
+                "line": 118
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/phases_structural.py",
+                "line": 108
+              }
+            ],
+            "sample": [
+              "format_flat_dir_summary(entry),",
+              "                detail={",
+              "                    \"file_count\": entry[\"file_count\"],",
+              "                    \"child_dir_count\": child_dir_count,"
+            ]
+          },
+          {
+            "id": "3ddc2697e6ededc4",
+            "distinct_files": 2,
+            "window_size": 12,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/commands.py",
+                "line": 178
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/commands.py",
+                "line": 161
+              }
+            ],
+            "sample": [
+              "(filepath))",
+              "    entries, _ = dupes_detector_mod.detect_duplicates(",
+              "        functions, threshold=getattr(args, \"threshold\", None) or 0.8",
+              "    )"
+            ]
+          },
+          {
+            "id": "466a87a0eb1e3002",
+            "distinct_files": 2,
+            "window_size": 15,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/show/test_cmd_show.py",
+                "line": 280
+              },
+              {
+                "file": "desloppify/desloppify/tests/scan/test_scan_reporting_subjective_paths.py",
+                "line": 191
+              }
+            ],
+            "sample": [
+              "{",
+              "            \"Naming quality\": {",
+              "                \"score\": 0.0,",
+              "                \"strict\": 0.0,"
+            ]
+          },
+          {
+            "id": "468a3cdb463d5904",
+            "distinct_files": 2,
+            "window_size": 11,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/review/integration/test_review_misc.py",
+                "line": 5
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/test_review_misc.py",
+                "line": 5
+              }
+            ],
+            "sample": [
+              ". import review_misc_cases as _cases",
+              "",
+              "for _name in dir(_cases):",
+              "    if not (_name.startswith(\"Test\") or _name.startswith(\"test_\")):"
+            ]
+          },
+          {
+            "id": "476432468c55200e",
+            "distinct_files": 2,
+            "window_size": 15,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/r/tests/test_r_smells.py",
+                "line": 7
+              },
+              {
+                "file": "desloppify/desloppify/languages/rust/tests/test_smells.py",
+                "line": 8
+              }
+            ],
+            "sample": [
+              ".detectors.smells import detect_smells",
+              "",
+              "",
+              "def _write(path: Path, rel_path: str, content: str) -> Path:"
+            ]
+          },
+          {
+            "id": "4b57e75e70bc18c2",
+            "distinct_files": 2,
+            "window_size": 18,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/test_coverage.py",
+                "line": 94
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/test_coverage.py",
+                "line": 243
+              }
+            ],
+            "sample": [
+              "and parent:",
+              "        candidates.append(os.path.join(parent, basename))",
+              "",
+              "    for prod in production_set:"
+            ]
+          },
+          {
+            "id": "4c03e9a2d3855691",
+            "distinct_files": 2,
+            "window_size": 25,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_confirmation.py",
+                "line": 34
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 33
+              }
+            ],
+            "sample": [
+              "plan = empty_plan()",
+              "    plan[\"queue_order\"] = list(TRIAGE_STAGE_IDS)",
+              "    meta = plan.setdefault(\"epic_triage_meta\", {})",
+              "    stages = meta.setdefault(\"triage_stages\", {})"
+            ]
+          },
+          {
+            "id": "4c4ba8ab22f86e6e",
+            "distinct_files": 2,
+            "window_size": 26,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/review/test_work_queue_plan_order_and_triage.py",
+                "line": 99
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/work_queue_cases.py",
+                "line": 540
+              }
+            ],
+            "sample": [
+              "objective_issues = [",
+              "        _issue(f\"smells::src/{c}.py::x\", detector=\"smells\", tier=3)",
+              "        for c in \"abcd\"",
+              "    ]"
+            ]
+          },
+          {
+            "id": "4f2ced846c8e2c7a",
+            "distinct_files": 2,
+            "window_size": 7,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/typescript/detectors/react/context.py",
+                "line": 24
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/detectors/react/state_sync.py",
+                "line": 26
+              }
+            ],
+            "sample": [
+              "try:",
+              "            p = Path(filepath) if Path(filepath).is_absolute() else get_project_root() / filepath",
+              "            content = p.read_text()",
+              "            lines = content.splitlines()"
+            ]
+          },
+          {
+            "id": "512ce212951e3def",
+            "distinct_files": 2,
+            "window_size": 24,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_confirmation.py",
+                "line": 59
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 77
+              }
+            ],
+            "sample": [
+              ")",
+              "",
+              "",
+              "def _fake_services(plan, state, save_plan_fn=None):"
+            ]
+          },
+          {
+            "id": "5445d59461c266a2",
+            "distinct_files": 2,
+            "window_size": 13,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/cxx/tests/test_compile_commands.py",
+                "line": 4
+              },
+              {
+                "file": "desloppify/desloppify/languages/cxx/tests/test_deps.py",
+                "line": 3
+              }
+            ],
+            "sample": [
+              "from pathlib import Path",
+              "",
+              "from desloppify.languages.cxx._helpers import build_cxx_dep_graph",
+              ""
+            ]
+          },
+          {
+            "id": "5890d8121f5243b8",
+            "distinct_files": 2,
+            "window_size": 14,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/javascript/test_coverage.py",
+                "line": 70
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/test_coverage.py",
+                "line": 69
+              }
+            ],
+            "sample": [
+              "]",
+              "logger = logging.getLogger(__name__)",
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "5a0ade38992dcd7f",
+            "distinct_files": 2,
+            "window_size": 15,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/move.py",
+                "line": 14
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/move.py",
+                "line": 13
+              }
+            ],
+            "sample": [
+              "logger = logging.getLogger(__name__)",
+              "",
+              "",
+              "def _dedup(replacements: list[tuple[str, str]]) -> list[tuple[str, str]]:"
+            ]
+          },
+          {
+            "id": "5a4eec469b0db19b",
+            "distinct_files": 2,
+            "window_size": 10,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_attestation.py",
+                "line": 12
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_jump_back.py",
+                "line": 8
+              }
+            ],
+            "sample": [
+              "from desloppify.app.commands.plan.triage.services import TriageServices",
+              "from desloppify.engine._plan.schema import empty_plan",
+              "from desloppify.engine._plan.constants import TRIAGE_STAGE_IDS",
+              ""
+            ]
+          },
+          {
+            "id": "5a4f1ad8b1b97de8",
+            "distinct_files": 2,
+            "window_size": 7,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/next/cmd.py",
+                "line": 7
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/show/cmd.py",
+                "line": 9
+              }
+            ],
+            "sample": [
+              "from desloppify.app.commands.helpers.guardrails import print_triage_guardrail_info",
+              "from desloppify.app.commands.helpers.lang import resolve_lang",
+              "from desloppify.app.commands.helpers.query import write_query",
+              "from desloppify.app.commands.helpers.command_runtime import command_runtime"
+            ]
+          },
+          {
+            "id": "5a81453211a2a9ef",
+            "distinct_files": 2,
+            "window_size": 16,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/_parse_helpers.py",
+                "line": 63
+              },
+              {
+                "file": "desloppify/desloppify/languages/cxx/_parse_helpers.py",
+                "line": 11
+              }
+            ],
+            "sample": [
+              ", len(content)):",
+              "        ch = content[i]",
+              "        if in_string:",
+              "            if escape:"
+            ]
+          },
+          {
+            "id": "5cf3b8846b87a28e",
+            "distinct_files": 2,
+            "window_size": 14,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/rust/commands.py",
+                "line": 24
+              },
+              {
+                "file": "desloppify/desloppify/languages/rust/phases.py",
+                "line": 30
+              }
+            ],
+            "sample": [
+              ",",
+              ")",
+              "from desloppify.languages._framework.generic_parts.tool_runner import ToolRunResult",
+              "from desloppify.languages._framework.generic_parts.tool_runner import run_tool_result"
+            ]
+          },
+          {
+            "id": "5dc8dcf0860f7cfb",
+            "distinct_files": 2,
+            "window_size": 38,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/phases_runtime.py",
+                "line": 87
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/phases_structural.py",
+                "line": 93
+              }
+            ],
+            "sample": [
+              "flat_entries, dir_count = flat_dirs_detector_mod.detect_flat_dirs(",
+              "        path,",
+              "        file_finder=lang.file_finder,",
+              "        config=flat_dirs_detector_mod.FlatDirDetectionConfig(),"
+            ]
+          },
+          {
+            "id": "5dfc9f7a6b559ba1",
+            "distinct_files": 2,
+            "window_size": 294,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/data/global/SKILL.md",
+                "line": 1
+              },
+              {
+                "file": "desloppify/docs/SKILL.md",
+                "line": 1
+              }
+            ],
+            "sample": [
+              "---",
+              "name: desloppify",
+              "description: >",
+              "  Multi-language codebase health scanner. Use when the user explicitly asks"
+            ]
+          },
+          {
+            "id": "5f36e7bdf27e0de4",
+            "distinct_files": 2,
+            "window_size": 16,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/base/subjective_dimension_catalog.py",
+                "line": 31
+              },
+              {
+                "file": "desloppify/desloppify/base/subjective_dimensions_constants.py",
+                "line": 33
+              }
+            ],
+            "sample": [
+              ": dict[str, float] = {",
+              "    \"high elegance\": 22.0,",
+              "    \"mid elegance\": 22.0,",
+              "    \"low elegance\": 12.0,"
+            ]
+          },
+          {
+            "id": "61eb6892fd376346",
+            "distinct_files": 2,
+            "window_size": 11,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/review/integration/test_review_commands.py",
+                "line": 5
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/test_review_commands.py",
+                "line": 5
+              }
+            ],
+            "sample": [
+              ". import review_commands_cases as _cases",
+              "",
+              "for _name in dir(_cases):",
+              "    if not (_name.startswith(\"Test\") or _name.startswith(\"test_\")):"
+            ]
+          },
+          {
+            "id": "629f130b49d663c2",
+            "distinct_files": 2,
+            "window_size": 16,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/tests/test_py_private_imports.py",
+                "line": 10
+              },
+              {
+                "file": "desloppify/desloppify/languages/python/tests/test_py_uncalled.py",
+                "line": 11
+              }
+            ],
+            "sample": [
+              "def _graph_entry(*, imports: set[str] | None = None) -> dict:",
+              "    return {",
+              "        \"imports\": imports or set(),",
+              "        \"importers\": set(),"
+            ]
+          },
+          {
+            "id": "62bd0557bec5820e",
+            "distinct_files": 2,
+            "window_size": 7,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/confirmations/organize.py",
+                "line": 51
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/validation/completion_policy.py",
+                "line": 172
+              }
+            ],
+            "sample": [
+              ", \"red\"))",
+              "    for fid in unclustered[:5]:",
+              "        short = fid.rsplit(\"::\", 2)[-2] if \"::\" in fid else fid",
+              "        print(colorize(f\"    {short}\", \"yellow\"))"
+            ]
+          },
+          {
+            "id": "64925f5d6ffc2ded",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/stages/observe.py",
+                "line": 32
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/stages/reflect.py",
+                "line": 253
+              }
+            ],
+            "sample": [
+              "report: str | None = getattr(args, \"report\", None)",
+              "    attestation: str | None = getattr(args, \"attestation\", None)",
+              "",
+              "    resolved_services = services or default_triage_services()"
+            ]
+          },
+          {
+            "id": "651ec38bd810409b",
+            "distinct_files": 2,
+            "window_size": 42,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/data/global/GEMINI.md",
+                "line": 3
+              },
+              {
+                "file": "desloppify/docs/GEMINI.md",
+                "line": 3
+              }
+            ],
+            "sample": [
+              " Gemini CLI Overlay",
+              "",
+              "Gemini CLI has experimental subagent support, but subagents currently run",
+              "sequentially (not in parallel). Review dimensions one at a time."
+            ]
+          },
+          {
+            "id": "652f6ba65ffcf6ef",
+            "distinct_files": 2,
+            "window_size": 14,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_confirmation.py",
+                "line": 100
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_jump_back.py",
+                "line": 121
+              }
+            ],
+            "sample": [
+              ")",
+              "",
+              "",
+              "def _patch_triage(monkeypatch, plan, state, save_plan_fn=None):"
+            ]
+          },
+          {
+            "id": "671e95d5bfce62ef",
+            "distinct_files": 2,
+            "window_size": 29,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/base/subjective_dimension_catalog.py",
+                "line": 3
+              },
+              {
+                "file": "desloppify/desloppify/base/subjective_dimensions_constants.py",
+                "line": 3
+              }
+            ],
+            "sample": [
+              "from __future__ import annotations",
+              "",
+              "DISPLAY_NAMES: dict[str, str] = {",
+              "    # Holistic dimensions"
+            ]
+          },
+          {
+            "id": "681cf1395bf98469",
+            "distinct_files": 2,
+            "window_size": 24,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/dart/extractors.py",
+                "line": 124
+              },
+              {
+                "file": "desloppify/desloppify/languages/gdscript/extractors.py",
+                "line": 84
+              }
+            ],
+            "sample": [
+              "normalized = _normalize_body(body)",
+              "        body_hash = hashlib.md5(",
+              "            normalized.encode(\"utf-8\"),",
+              "            usedforsecurity=False,"
+            ]
+          },
+          {
+            "id": "6888accaf85b5597",
+            "distinct_files": 2,
+            "window_size": 16,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_completion_cleanup.py",
+                "line": 25
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 17
+              }
+            ],
+            "sample": [
+              "def _state_with_review_issues(*ids: str) -> dict:",
+              "    issues = {}",
+              "    for fid in ids:",
+              "        issues[fid] = {"
+            ]
+          },
+          {
+            "id": "6a928296fa870039",
+            "distinct_files": 2,
+            "window_size": 18,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/detectors/ruff_smells.py",
+                "line": 81
+              },
+              {
+                "file": "desloppify/desloppify/languages/python/detectors/unused.py",
+                "line": 173
+              }
+            ],
+            "sample": [
+              ",",
+              "        \"--output-format\",",
+              "        \"json\",",
+              "        \"--no-fix\","
+            ]
+          },
+          {
+            "id": "6b3f236d31516f93",
+            "distinct_files": 2,
+            "window_size": 21,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/review.py",
+                "line": 3
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/review.py",
+                "line": 3
+              }
+            ],
+            "sample": [
+              "from __future__ import annotations",
+              "",
+              "import re",
+              ""
+            ]
+          },
+          {
+            "id": "6f1c37275a692b6c",
+            "distinct_files": 2,
+            "window_size": 17,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_react.py",
+                "line": 15
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_unused.py",
+                "line": 16
+              }
+            ],
+            "sample": [
+              ",",
+              ")",
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "7195aa48413be751",
+            "distinct_files": 2,
+            "window_size": 14,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/test_transitive_modules.py",
+                "line": 856
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/test_transitive_modules_update_skill.py",
+                "line": 177
+              }
+            ],
+            "sample": [
+              "mock_download.side_effect = lambda f: {",
+              "            \"SKILL.md\": skill_content,",
+              "            \"CLAUDE.md\": \"overlay\",",
+              "        }[f]"
+            ]
+          },
+          {
+            "id": "72699c965f392026",
+            "distinct_files": 2,
+            "window_size": 15,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/plan/test_stale_dimensions.py",
+                "line": 277
+              },
+              {
+                "file": "desloppify/desloppify/tests/plan/test_stale_dimensions_cycle_and_queue_order.py",
+                "line": 72
+              }
+            ],
+            "sample": [
+              "state[\"work_items\"][\"some_issue::file.py::abc123\"] = {",
+              "        \"id\": \"some_issue::file.py::abc123\",",
+              "        \"status\": \"open\",",
+              "        \"detector\": \"smells\","
+            ]
+          },
+          {
+            "id": "74d9077d6edb7b50",
+            "distinct_files": 2,
+            "window_size": 13,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/runner/orchestrator_claude.py",
+                "line": 26
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/runner/orchestrator_codex_pipeline.py",
+                "line": 330
+              }
+            ],
+            "sample": [
+              "runtime = resolved_services.command_runtime(args)",
+              "        state = runtime.state",
+              "    plan = resolved_services.load_plan()",
+              "    start_outcome = ensure_triage_started("
+            ]
+          },
+          {
+            "id": "74e689ae0f261972",
+            "distinct_files": 2,
+            "window_size": 23,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/gdscript/extractors.py",
+                "line": 84
+              },
+              {
+                "file": "desloppify/desloppify/languages/go/extractors.py",
+                "line": 253
+              }
+            ],
+            "sample": [
+              "(body)",
+              "        body_hash = hashlib.md5(",
+              "            normalized.encode(\"utf-8\"),",
+              "            usedforsecurity=False,"
+            ]
+          },
+          {
+            "id": "771de37df01f39ee",
+            "distinct_files": 2,
+            "window_size": 10,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/test_transitive_modules.py",
+                "line": 869
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/test_transitive_modules_update_skill.py",
+                "line": 189
+              }
+            ],
+            "sample": [
+              ")",
+              "        assert \"desloppify-skill-version\" in written",
+              "        out = capsys.readouterr().out",
+              "        assert \"Updated\" in out"
+            ]
+          },
+          {
+            "id": "778aaf7bea00fae9",
+            "distinct_files": 2,
+            "window_size": 33,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/data/global/OPENCODE.md",
+                "line": 3
+              },
+              {
+                "file": "desloppify/docs/OPENCODE.md",
+                "line": 3
+              }
+            ],
+            "sample": [
+              " OpenCode Overlay",
+              "",
+              "When installed (via `desloppify update-skill opencode`), OpenCode automatically loads this skill for code quality, technical debt, and health score questions.",
+              ""
+            ]
+          },
+          {
+            "id": "78d1829effaf45fd",
+            "distinct_files": 2,
+            "window_size": 24,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/detectors/coverage/test_test_coverage.py",
+                "line": 31
+              },
+              {
+                "file": "desloppify/desloppify/tests/detectors/coverage/test_test_coverage_mapping_import_and_logic.py",
+                "line": 30
+              }
+            ],
+            "sample": [
+              "def _make_zone_map(file_list: list[str]) -> FileZoneMap:",
+              "    \"\"\"Build a minimal FileZoneMap with standard test-detection rules.\"\"\"",
+              "    rules = [",
+              "        ZoneRule(Zone.TEST, [\"test_\", \".test.\", \".spec.\", \"/tests/\", \"/__tests__/\"])"
+            ]
+          },
+          {
+            "id": "78e7c45d47811c13",
+            "distinct_files": 2,
+            "window_size": 20,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_confirmation.py",
+                "line": 84
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 61
+              }
+            ],
+            "sample": [
+              "defaults = {",
+              "        \"lang\": None,",
+              "        \"path\": \".\",",
+              "        \"confirm\": None,"
+            ]
+          },
+          {
+            "id": "7b679c93f0ba117d",
+            "distinct_files": 2,
+            "window_size": 12,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/cxx/tests/test_cppcheck_phase.py",
+                "line": 20
+              },
+              {
+                "file": "desloppify/desloppify/languages/cxx/tests/test_security.py",
+                "line": 161
+              }
+            ],
+            "sample": [
+              "assert cmd.startswith(\"cppcheck \")",
+              "        calls.append(cmd)",
+              "        if \"unsafe_a.cpp\" in cmd and \"unsafe_b.cpp\" in cmd:",
+              "            return ToolRunResult("
+            ]
+          },
+          {
+            "id": "7d13a8feda405a90",
+            "distinct_files": 2,
+            "window_size": 11,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/lang/dart/test_dart_deps.py",
+                "line": 8
+              },
+              {
+                "file": "desloppify/desloppify/tests/lang/gdscript/test_gdscript_deps.py",
+                "line": 7
+              }
+            ],
+            "sample": [
+              ".detectors.deps import build_dep_graph",
+              "",
+              "",
+              "def _write(path: Path, relpath: str, content: str) -> Path:"
+            ]
+          },
+          {
+            "id": "81104d487324dcd6",
+            "distinct_files": 2,
+            "window_size": 6,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/display/dashboard.py",
+                "line": 258
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/stages/records.py",
+                "line": 157
+              }
+            ],
+            "sample": [
+              "[",
+              "        str(entry.get(\"name\", \"\")).strip()",
+              "        for entry in briefing.get(\"focus_dimensions\", [])",
+              "        if isinstance(entry, dict) and str(entry.get(\"name\", \"\")).strip()"
+            ]
+          },
+          {
+            "id": "849b70c99ab1fc89",
+            "distinct_files": 2,
+            "window_size": 12,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/typescript/fixers/if_chain.py",
+                "line": 18
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/fixers/useeffect.py",
+                "line": 20
+              }
+            ],
+            "sample": [
+              "def transform(",
+              "        lines: list[str],",
+              "        file_entries: list[dict[str, Any]],",
+              "    ) -> tuple[list[str], list[str]]:"
+            ]
+          },
+          {
+            "id": "87ceac7aafb8de88",
+            "distinct_files": 2,
+            "window_size": 21,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/tests/test_py_smells_ast.py",
+                "line": 3
+              },
+              {
+                "file": "desloppify/desloppify/languages/python/tests/test_py_smells_regex.py",
+                "line": 3
+              }
+            ],
+            "sample": [
+              "import textwrap",
+              "from pathlib import Path",
+              "",
+              "from desloppify.languages.python.detectors.smells import detect_smells"
+            ]
+          },
+          {
+            "id": "87fdb368c599c5d0",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/dart/tests/test_init.py",
+                "line": 39
+              },
+              {
+                "file": "desloppify/desloppify/languages/gdscript/tests/test_init.py",
+                "line": 39
+              }
+            ],
+            "sample": [
+              "()",
+              "    from desloppify.base.runtime_state import RuntimeContext, runtime_scope",
+              "    from desloppify.base.discovery.source import clear_source_file_cache_for_tests",
+              "    ctx = RuntimeContext(project_root=tmp_path)"
+            ]
+          },
+          {
+            "id": "8c1f978dec900188",
+            "distinct_files": 2,
+            "window_size": 32,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/review/test_work_queue_plan_order_and_triage.py",
+                "line": 10
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/work_queue_cases.py",
+                "line": 5
+              }
+            ],
+            "sample": [
+              "from desloppify.engine._work_queue.core import QueueBuildOptions",
+              "from desloppify.engine._work_queue.core import build_work_queue as _build_work_queue",
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "8f155c9e08b45d66",
+            "distinct_files": 2,
+            "window_size": 46,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/_framework/review_data/dimensions.json",
+                "line": 243
+              },
+              {
+                "file": "desloppify/desloppify/tests/snapshots/cli_smoke/query.json",
+                "line": 96
+              }
+            ],
+            "sample": [
+              "]",
+              "    },",
+              "    \"dependency_health\": {",
+              "      \"description\": \"Unused deps, version conflicts, multiple libs for same purpose, heavy deps\","
+            ]
+          },
+          {
+            "id": "8f3402770c3a8220",
+            "distinct_files": 2,
+            "window_size": 19,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/go/phases.py",
+                "line": 49
+              },
+              {
+                "file": "desloppify/desloppify/languages/rust/phases.py",
+                "line": 108
+              }
+            ],
+            "sample": [
+              ",",
+              "        weight=1,",
+              "        threshold=10,",
+              "    ),"
+            ]
+          },
+          {
+            "id": "90a8602be48a2fad",
+            "distinct_files": 2,
+            "window_size": 10,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/status/test_sparkline.py",
+                "line": 102
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/test_status_flow_direct.py",
+                "line": 44
+              }
+            ],
+            "sample": [
+              "flow_mod.print_score_section(",
+              "        state={},",
+              "        scores=SimpleNamespace(overall=90.0, objective=95.0, strict=85.0, verified=84.0),",
+              "        plan={},"
+            ]
+          },
+          {
+            "id": "90cad5cddef1686e",
+            "distinct_files": 2,
+            "window_size": 15,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/dart/__init__.py",
+                "line": 3
+              },
+              {
+                "file": "desloppify/desloppify/languages/gdscript/__init__.py",
+                "line": 3
+              }
+            ],
+            "sample": [
+              "from __future__ import annotations",
+              "",
+              "from desloppify.base.discovery.paths import get_area",
+              "from desloppify.engine.policy.zones import COMMON_ZONE_RULES, Zone, ZoneRule"
+            ]
+          },
+          {
+            "id": "91459fd18fd36aa5",
+            "distinct_files": 2,
+            "window_size": 8,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/dart/detectors/deps.py",
+                "line": 50
+              },
+              {
+                "file": "desloppify/desloppify/languages/dart/test_coverage.py",
+                "line": 82
+              }
+            ],
+            "sample": [
+              ".parent / cleaned).resolve())",
+              "    elif cleaned.startswith(\"/\"):",
+              "        candidates.append((project_root / cleaned.lstrip(\"/\")).resolve())",
+              "    else:"
+            ]
+          },
+          {
+            "id": "926a8a95c3630993",
+            "distinct_files": 2,
+            "window_size": 20,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/data/global/CODEX.md",
+                "line": 3
+              },
+              {
+                "file": "desloppify/docs/CODEX.md",
+                "line": 3
+              }
+            ],
+            "sample": [
+              " Codex Overlay",
+              "",
+              "This is the canonical Codex overlay used by the README install command.",
+              ""
+            ]
+          },
+          {
+            "id": "92d8f9d34da78e0e",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/scoring/test_scoring.py",
+                "line": 837
+              },
+              {
+                "file": "desloppify/desloppify/tests/scoring/test_scoring_review_exclusion.py",
+                "line": 43
+              }
+            ],
+            "sample": [
+              "f = _issue(\"review\", confidence=\"high\", file=\".\")",
+              "        f[\"detail\"] = {\"holistic\": True}",
+              "        issues = _issues_dict(f)",
+              "        rate, issues, weighted = detector_pass_rate(\"review\", issues, 60)"
+            ]
+          },
+          {
+            "id": "93073e16b8da936b",
+            "distinct_files": 2,
+            "window_size": 31,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/detectors/test_concerns.py",
+                "line": 15
+              },
+              {
+                "file": "desloppify/desloppify/tests/detectors/test_concerns_signals_and_helpers.py",
+                "line": 17
+              }
+            ],
+            "sample": [
+              "def _make_issue(",
+              "    detector: str,",
+              "    file: str,",
+              "    name: str,"
+            ]
+          },
+          {
+            "id": "9403b20525cde33b",
+            "distinct_files": 2,
+            "window_size": 10,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/_framework/treesitter/analysis/complexity_callbacks.py",
+                "line": 43
+              },
+              {
+                "file": "desloppify/desloppify/languages/_framework/treesitter/analysis/complexity_nesting.py",
+                "line": 55
+              }
+            ],
+            "sample": [
+              ", parser, spec.grammar)",
+              "        if cached is None:",
+              "            return None",
+              "        _source, tree = cached"
+            ]
+          },
+          {
+            "id": "948d459ba5098ae7",
+            "distinct_files": 2,
+            "window_size": 7,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/typescript/detectors/react/hook_bloat.py",
+                "line": 23
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/detectors/react/state_sync.py",
+                "line": 25
+              }
+            ],
+            "sample": [
+              "for filepath in find_tsx_files(path):",
+              "        try:",
+              "            p = Path(filepath) if Path(filepath).is_absolute() else get_project_root() / filepath",
+              "            content = p.read_text()"
+            ]
+          },
+          {
+            "id": "968129beae689ae7",
+            "distinct_files": 2,
+            "window_size": 21,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/plan_state_access.py",
+                "line": 16
+              },
+              {
+                "file": "desloppify/desloppify/engine/_plan/triage/lifecycle.py",
+                "line": 25
+              }
+            ],
+            "sample": [
+              "def ensure_queue_order(plan: PlanModel) -> list[str]:",
+              "    \"\"\"Return queue order, creating the stored list when missing.\"\"\"",
+              "    order = plan.get(\"queue_order\")",
+              "    if isinstance(order, list):"
+            ]
+          },
+          {
+            "id": "96e4819cebcb466d",
+            "distinct_files": 2,
+            "window_size": 11,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/engine/_plan/auto_cluster_sync.py",
+                "line": 71
+              },
+              {
+                "file": "desloppify/desloppify/engine/_plan/sync/dimensions.py",
+                "line": 105
+              }
+            ],
+            "sample": [
+              "skipped = plan.get(\"skipped\", {})",
+              "    if not isinstance(skipped, dict):",
+              "        return set()",
+              "    return {"
+            ]
+          },
+          {
+            "id": "9a1c714090ddeabc",
+            "distinct_files": 2,
+            "window_size": 24,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/scoring/test_scoring.py",
+                "line": 29
+              },
+              {
+                "file": "desloppify/desloppify/tests/scoring/test_scoring_subjective_and_display.py",
+                "line": 23
+              }
+            ],
+            "sample": [
+              "def _issue(",
+              "    detector: str,",
+              "    *,",
+              "    status: str = \"open\","
+            ]
+          },
+          {
+            "id": "9bbd17acf9ede07b",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/_framework/base/shared_phases.py",
+                "line": 73
+              },
+              {
+                "file": "desloppify/desloppify/languages/_framework/base/shared_phases_review.py",
+                "line": 495
+              }
+            ],
+            "sample": [
+              "def phase_security(",
+              "    path: Path,",
+              "    lang: LangRuntimeContract,",
+              "    *,"
+            ]
+          },
+          {
+            "id": "9d95c54582899f83",
+            "distinct_files": 2,
+            "window_size": 18,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/tests/test_py_smells_crossfile.py",
+                "line": 7
+              },
+              {
+                "file": "desloppify/desloppify/languages/python/tests/test_py_smells_regex.py",
+                "line": 6
+              }
+            ],
+            "sample": [
+              "from desloppify.languages.python.detectors.smells import detect_smells",
+              "",
+              "# \u2500\u2500 Helpers \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+              ""
+            ]
+          },
+          {
+            "id": "a26146ed729e8a86",
+            "distinct_files": 2,
+            "window_size": 23,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/data/global/CURSOR.md",
+                "line": 3
+              },
+              {
+                "file": "desloppify/docs/CURSOR.md",
+                "line": 3
+              }
+            ],
+            "sample": [
+              " Cursor Overlay",
+              "",
+              "Cursor supports native subagents via `.cursor/agents/` definitions. Use them",
+              "for context-isolated subjective reviews."
+            ]
+          },
+          {
+            "id": "a39367dfd811ebc1",
+            "distinct_files": 2,
+            "window_size": 19,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/test_queue_order_guard.py",
+                "line": 287
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/test_work_queue_plan_order_and_triage.py",
+                "line": 206
+              }
+            ],
+            "sample": [
+              "{",
+              "            \"Naming quality\": {",
+              "                \"score\": 70.0,",
+              "                \"strict\": 70.0,"
+            ]
+          },
+          {
+            "id": "a44bf60ad8691e71",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/dart/extractors.py",
+                "line": 95
+              },
+              {
+                "file": "desloppify/desloppify/languages/go/extractors.py",
+                "line": 224
+              }
+            ],
+            "sample": [
+              "try:",
+              "        content = Path(resolve_path(filepath)).read_text(errors=\"replace\")",
+              "    except OSError:",
+              "        return []"
+            ]
+          },
+          {
+            "id": "a4ec17ea41550a70",
+            "distinct_files": 2,
+            "window_size": 25,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/javascript/test_coverage.py",
+                "line": 86
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/test_coverage.py",
+                "line": 88
+              }
+            ],
+            "sample": [
+              "brace_depth = 0",
+              "",
+              "    for line in content.splitlines():",
+              "        stripped = line.strip()"
+            ]
+          },
+          {
+            "id": "a6a3654200d2ba58",
+            "distinct_files": 2,
+            "window_size": 39,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/data/global/CLAUDE.md",
+                "line": 3
+              },
+              {
+                "file": "desloppify/docs/CLAUDE.md",
+                "line": 3
+              }
+            ],
+            "sample": [
+              " Claude Code Overlay",
+              "",
+              "Use Claude subagents for subjective scoring work. **Do not use `--runner codex`** \u2014 use Claude subagents exclusively.",
+              ""
+            ]
+          },
+          {
+            "id": "a874f1232ec7c85c",
+            "distinct_files": 2,
+            "window_size": 30,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/_parse_helpers.py",
+                "line": 26
+              },
+              {
+                "file": "desloppify/desloppify/languages/cxx/_parse_helpers.py",
+                "line": 6
+              }
+            ],
+            "sample": [
+              "def find_matching_brace(content: str, open_pos: int) -> int | None:",
+              "    \"\"\"Return index of matching '}' for a '{' at ``open_pos``.\"\"\"",
+              "    depth = 0",
+              "    in_string: str | None = None"
+            ]
+          },
+          {
+            "id": "abd52edc09c98209",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_deprecated.py",
+                "line": 17
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_patterns.py",
+                "line": 19
+              }
+            ],
+            "sample": [
+              "def _write(tmp_path: Path, name: str, content: str) -> Path:",
+              "    p = tmp_path / name",
+              "    p.parent.mkdir(parents=True, exist_ok=True)",
+              "    p.write_text(content)"
+            ]
+          },
+          {
+            "id": "abdac199401da7fd",
+            "distinct_files": 2,
+            "window_size": 16,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/r/detectors/smells.py",
+                "line": 120
+              },
+              {
+                "file": "desloppify/desloppify/languages/rust/detectors/smells.py",
+                "line": 82
+              }
+            ],
+            "sample": [
+              ":",
+              "        pattern = check.get(\"pattern\")",
+              "        if pattern is None:",
+              "            continue"
+            ]
+          },
+          {
+            "id": "ad430f2a74500e58",
+            "distinct_files": 2,
+            "window_size": 27,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/commands.py",
+                "line": 96
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/commands.py",
+                "line": 128
+              }
+            ],
+            "sample": [
+              ",",
+              "        ),",
+              "    )",
+              "    if getattr(args, \"json\", False):"
+            ]
+          },
+          {
+            "id": "ad51d397ccfac6e1",
+            "distinct_files": 2,
+            "window_size": 58,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/javascript/test_coverage.py",
+                "line": 251
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/test_coverage.py",
+                "line": 266
+              }
+            ],
+            "sample": [
+              "for marker in (\".test.\", \".spec.\"):",
+              "        if marker in basename:",
+              "            return basename.replace(marker, \".\")",
+              "    return None"
+            ]
+          },
+          {
+            "id": "adbaf81b2aa3ed1e",
+            "distinct_files": 2,
+            "window_size": 13,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/gdscript/phases.py",
+                "line": 33
+              },
+              {
+                "file": "desloppify/desloppify/languages/rust/phases.py",
+                "line": 114
+              }
+            ],
+            "sample": [
+              ",",
+              "        weight=2,",
+              "        threshold=0,",
+              "    ),"
+            ]
+          },
+          {
+            "id": "aefbb27ef0a1a307",
+            "distinct_files": 2,
+            "window_size": 22,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_auto_start.py",
+                "line": 13
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_jump_back.py",
+                "line": 10
+              }
+            ],
+            "sample": [
+              "TRIAGE_STAGE_IDS",
+              "",
+              "# ---------------------------------------------------------------------------",
+              "# Helpers"
+            ]
+          },
+          {
+            "id": "af9a0186a0cd6623",
+            "distinct_files": 2,
+            "window_size": 7,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/dart/extractors.py",
+                "line": 66
+              },
+              {
+                "file": "desloppify/desloppify/languages/gdscript/extractors.py",
+                "line": 34
+              }
+            ],
+            "sample": [
+              "def _extract_params(raw_params: str) -> list[str]:",
+              "    names: list[str] = []",
+              "    for chunk in raw_params.split(\",\"):",
+              "        token = chunk.strip().split(\"=\")[0].strip()"
+            ]
+          },
+          {
+            "id": "b0523b6abd9bf5a7",
+            "distinct_files": 2,
+            "window_size": 19,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/test_coverage.py",
+                "line": 151
+              },
+              {
+                "file": "desloppify/desloppify/languages/php/test_coverage.py",
+                "line": 311
+              }
+            ],
+            "sample": [
+              ":",
+              "            in_string = ch",
+              "            out.append(ch)",
+              "            i += 1"
+            ]
+          },
+          {
+            "id": "b18f16f100802301",
+            "distinct_files": 2,
+            "window_size": 6,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/lang/common/test_framework_registration_and_commands_split_direct.py",
+                "line": 245
+              },
+              {
+                "file": "desloppify/desloppify/tests/lang/csharp/test_csharp_deps_support_split_direct.py",
+                "line": 118
+              }
+            ],
+            "sample": [
+              ", \"importer_count\": 1},",
+              "    }",
+              "",
+              "    printed: list[str] = []"
+            ]
+          },
+          {
+            "id": "b1c604f7e155f0ef",
+            "distinct_files": 2,
+            "window_size": 10,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/intelligence/review/dimensions/data.py",
+                "line": 61
+              },
+              {
+                "file": "desloppify/desloppify/intelligence/review/dimensions/validation.py",
+                "line": 34
+              }
+            ],
+            "sample": [
+              ")",
+              "    out: list[str] = []",
+              "    for idx, item in enumerate(value):",
+              "        if not isinstance(item, str) or not item.strip():"
+            ]
+          },
+          {
+            "id": "b31d104a37216abb",
+            "distinct_files": 2,
+            "window_size": 25,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/commands.py",
+                "line": 103
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/commands.py",
+                "line": 162
+              }
+            ],
+            "sample": [
+              "detect_duplicates(",
+              "        functions, threshold=getattr(args, \"threshold\", None) or 0.8",
+              "    )",
+              "    if getattr(args, \"json\", False):"
+            ]
+          },
+          {
+            "id": "b3949b2180ea8dbe",
+            "distinct_files": 2,
+            "window_size": 23,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/move.py",
+                "line": 159
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/move.py",
+                "line": 100
+              }
+            ],
+            "sample": [
+              "))",
+              "",
+              "        if replacements:",
+              "            changes[importer] = _dedup(replacements)"
+            ]
+          },
+          {
+            "id": "b5919f82e865ceac",
+            "distinct_files": 2,
+            "window_size": 20,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_auto_start.py",
+                "line": 34
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 56
+              }
+            ],
+            "sample": [
+              "def _fake_runtime(state: dict):",
+              "    return type(\"Ctx\", (), {\"state\": state, \"config\": {}})()",
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "b92a73b188d5b2af",
+            "distinct_files": 2,
+            "window_size": 14,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/next/cmd.py",
+                "line": 28
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/show/cmd.py",
+                "line": 115
+              }
+            ],
+            "sample": [
+              "runtime = command_runtime(args)",
+              "    state = runtime.state",
+              "    config = runtime.config",
+              "    if not require_issue_inventory(state):"
+            ]
+          },
+          {
+            "id": "b9ed25a5b2d38be6",
+            "distinct_files": 2,
+            "window_size": 48,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/state/test_state.py",
+                "line": 33
+              },
+              {
+                "file": "desloppify/desloppify/tests/state/test_state_suppression_and_integrity.py",
+                "line": 17
+              }
+            ],
+            "sample": [
+              "def merge_scan(state, current_issues, *args, **kwargs):",
+              "    options = kwargs.pop(\"options\", None)",
+              "    if args:",
+              "        if len(args) != 1:"
+            ]
+          },
+          {
+            "id": "bac25c6d947231b7",
+            "distinct_files": 2,
+            "window_size": 37,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_auto_start.py",
+                "line": 57
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 74
+              }
+            ],
+            "sample": [
+              ",",
+              "    }",
+              "    defaults.update(overrides)",
+              "    return argparse.Namespace(**defaults)"
+            ]
+          },
+          {
+            "id": "c023d802d0157bd6",
+            "distinct_files": 2,
+            "window_size": 25,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/state_compat.py",
+                "line": 37
+              },
+              {
+                "file": "desloppify/desloppify/state_io.py",
+                "line": 10
+              }
+            ],
+            "sample": [
+              "from desloppify.engine._state.schema import (",
+              "    CURRENT_VERSION,",
+              "    ConcernDismissal,",
+              "    DimensionScore,"
+            ]
+          },
+          {
+            "id": "c0fd5e3a77673db8",
+            "distinct_files": 2,
+            "window_size": 19,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/detectors/coverage/test_test_coverage.py",
+                "line": 669
+              },
+              {
+                "file": "desloppify/desloppify/tests/detectors/coverage/test_test_coverage_mapping_import_and_logic.py",
+                "line": 403
+              }
+            ],
+            "sample": [
+              "prod_a = _write_file(",
+              "            tmp_path, \"a.py\", \"import b\\ndef run():\\n    pass\\n\" + \"# code\\n\" * 13",
+              "        )",
+              "        prod_b = _write_file("
+            ]
+          },
+          {
+            "id": "c19ec86c530831fe",
+            "distinct_files": 2,
+            "window_size": 23,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/deps/cli.py",
+                "line": 28
+              },
+              {
+                "file": "desloppify/desloppify/languages/csharp/detectors/deps_support_render.py",
+                "line": 55
+              }
+            ],
+            "sample": [
+              ")",
+              "    if getattr(args, \"json\", False):",
+              "        top = by_importers[: getattr(args, \"top\", 20)]",
+              "        print("
+            ]
+          },
+          {
+            "id": "c409a3a8f3decefb",
+            "distinct_files": 2,
+            "window_size": 18,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/review.py",
+                "line": 84
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/review.py",
+                "line": 81
+              }
+            ],
+            "sample": [
+              ", content)",
+              "        )",
+              "        if has_sync and has_async:",
+              "            sync_async_mix.append(rel(filepath))"
+            ]
+          },
+          {
+            "id": "c8a95e0d455f4640",
+            "distinct_files": 2,
+            "window_size": 107,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/test_transitive_modules.py",
+                "line": 739
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/test_transitive_modules_update_skill.py",
+                "line": 70
+              }
+            ],
+            "sample": [
+              "class TestResolveInterface:",
+              "    def test_explicit_value(self):",
+              "        assert resolve_interface(\"Claude\") == \"claude\"",
+              "        assert resolve_interface(\"CURSOR\") == \"cursor\""
+            ]
+          },
+          {
+            "id": "c8aa650946a3fa2a",
+            "distinct_files": 2,
+            "window_size": 13,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/review/external.py",
+                "line": 144
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/review/prepare.py",
+                "line": 31
+              }
+            ],
+            "sample": [
+              "= build_review_packet_payload(",
+              "            state=state,",
+              "            lang=lang,",
+              "            config=config,"
+            ]
+          },
+          {
+            "id": "c8d46477cf1f5e03",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/javascript/test_coverage.py",
+                "line": 136
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/test_coverage.py",
+                "line": 162
+              }
+            ],
+            "sample": [
+              "if spec.startswith(\"@/\") or spec.startswith(\"~/\"):",
+              "        base = get_src_path() / spec[2:]",
+              "    elif spec.startswith(\".\"):",
+              "        test_dir = Path(test_path).parent"
+            ]
+          },
+          {
+            "id": "c93fec44dc346d08",
+            "distinct_files": 2,
+            "window_size": 12,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/_framework/treesitter/analysis/cohesion.py",
+                "line": 18
+              },
+              {
+                "file": "desloppify/desloppify/languages/_framework/treesitter/analysis/unused_imports.py",
+                "line": 11
+              }
+            ],
+            "sample": [
+              "from typing import TYPE_CHECKING",
+              "",
+              "from .. import PARSE_INIT_ERRORS",
+              "from ..imports.cache import get_or_parse_tree"
+            ]
+          },
+          {
+            "id": "ca227f6780e0efa7",
+            "distinct_files": 2,
+            "window_size": 15,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/plan_state_access.py",
+                "line": 42
+              },
+              {
+                "file": "desloppify/desloppify/engine/_plan/triage/lifecycle.py",
+                "line": 41
+              }
+            ],
+            "sample": [
+              "] = normalized",
+              "    return normalized",
+              "",
+              ""
+            ]
+          },
+          {
+            "id": "ccd66abafd4e6a48",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/review/test_review_runner_helpers_direct.py",
+                "line": 228
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/review_commands_runner_cases.py",
+                "line": 70
+              }
+            ],
+            "sample": [
+              "batch_results, failures = runner_helpers_mod.collect_batch_results(",
+              "            request=CollectBatchResultsRequest(",
+              "                selected_indexes=[0],",
+              "                failures=[0],"
+            ]
+          },
+          {
+            "id": "cd0abe57659b1086",
+            "distinct_files": 2,
+            "window_size": 18,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/javascript/test_coverage.py",
+                "line": 144
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/test_coverage.py",
+                "line": 170
+              }
+            ],
+            "sample": [
+              ":",
+              "        candidate = str(Path(str(base) + ext))",
+              "        if candidate in production_files:",
+              "            return candidate"
+            ]
+          },
+          {
+            "id": "cd4ae0e46cbc8460",
+            "distinct_files": 2,
+            "window_size": 13,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/_framework/base/shared_phases_structural.py",
+                "line": 106
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/phases_structural.py",
+                "line": 96
+              }
+            ],
+            "sample": [
+              "FlatDirDetectionConfig(),",
+              "    )",
+              "    for entry in flat_entries:",
+              "        child_dir_count = int(entry.get(\"child_dir_count\", 0))"
+            ]
+          },
+          {
+            "id": "cdcd8c1ad0f047e2",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/helpers/score_update.py",
+                "line": 11
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/scan/helpers.py",
+                "line": 186
+              }
+            ],
+            "sample": [
+              "(value: float, prev: float | None) -> tuple[str, str]:",
+              "    \"\"\"Return (delta_str, color) for a score change.\"\"\"",
+              "    delta = value - prev if prev is not None else 0",
+              "    delta_str = f\" ({'+' if delta > 0 else ''}{delta:.1f})\" if delta != 0 else \"\""
+            ]
+          },
+          {
+            "id": "d047b84581b118d2",
+            "distinct_files": 2,
+            "window_size": 17,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_jump_back.py",
+                "line": 26
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 27
+              }
+            ],
+            "sample": [
+              "},",
+              "        }",
+              "    return {\"issues\": issues, \"scan_count\": 5, \"dimension_scores\": {}}",
+              ""
+            ]
+          },
+          {
+            "id": "d0bc999dea7a017c",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/__init__.py",
+                "line": 6
+              },
+              {
+                "file": "desloppify/desloppify/languages/python/__init__.py",
+                "line": 9
+              }
+            ],
+            "sample": [
+              "from desloppify.languages._framework.base.phase_builders import (",
+              "    detector_phase_security,",
+              "    detector_phase_signature,",
+              "    detector_phase_test_coverage,"
+            ]
+          },
+          {
+            "id": "d0fc2409f2c876a4",
+            "distinct_files": 2,
+            "window_size": 18,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/test_cmd_backlog.py",
+                "line": 11
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/test_cmd_next.py",
+                "line": 15
+              }
+            ],
+            "sample": [
+              "def _args(**overrides):",
+              "    base = {",
+              "        \"count\": 1,",
+              "        \"scope\": None,"
+            ]
+          },
+          {
+            "id": "d226e1f68817a7f2",
+            "distinct_files": 2,
+            "window_size": 26,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/data/global/COPILOT.md",
+                "line": 3
+              },
+              {
+                "file": "desloppify/docs/COPILOT.md",
+                "line": 3
+              }
+            ],
+            "sample": [
+              " VS Code Copilot Overlay",
+              "",
+              "VS Code Copilot supports native subagents via `.github/agents/` definitions.",
+              "Use them for context-isolated subjective reviews."
+            ]
+          },
+          {
+            "id": "d2fe98a0a9475000",
+            "distinct_files": 2,
+            "window_size": 12,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/dart/phases.py",
+                "line": 3
+              },
+              {
+                "file": "desloppify/desloppify/languages/gdscript/phases.py",
+                "line": 3
+              }
+            ],
+            "sample": [
+              "from __future__ import annotations",
+              "",
+              "from pathlib import Path",
+              ""
+            ]
+          },
+          {
+            "id": "d42e78876025558d",
+            "distinct_files": 2,
+            "window_size": 27,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/detectors/coupling/test_coupling.py",
+                "line": 19
+              },
+              {
+                "file": "desloppify/desloppify/tests/detectors/coupling/test_coupling_cross_tool_imports.py",
+                "line": 12
+              }
+            ],
+            "sample": [
+              "# Fixed prefixes for all tests \u2014 simulate a /project/src layout.",
+              "SHARED_PREFIX = \"/project/src/shared/\"",
+              "TOOLS_PREFIX = \"/project/src/tools/\"",
+              ""
+            ]
+          },
+          {
+            "id": "d55639110ad8f4b2",
+            "distinct_files": 2,
+            "window_size": 8,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/scan/artifacts.py",
+                "line": 40
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/status/cmd.py",
+                "line": 71
+              }
+            ],
+            "sample": [
+              "scores = score_snapshot(state)",
+              "    issues = (state.get(\"work_items\") or state.get(\"issues\", {}))",
+              "    open_scope = (",
+              "        open_scope_breakdown(issues, state.get(\"scan_path\"))"
+            ]
+          },
+          {
+            "id": "d6d37612522f3b36",
+            "distinct_files": 2,
+            "window_size": 29,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/_framework/node/js_text.py",
+                "line": 44
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/detectors/smells/helpers.py",
+                "line": 131
+              }
+            ],
+            "sample": [
+              "(text: str) -> str:",
+              "    \"\"\"Blank string literals and ``//`` comments to spaces, preserving positions.\"\"\"",
+              "    out = list(text)",
+              "    in_line_comment = False"
+            ]
+          },
+          {
+            "id": "d7338337579237c2",
+            "distinct_files": 2,
+            "window_size": 19,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/go/test_coverage.py",
+                "line": 140
+              },
+              {
+                "file": "desloppify/desloppify/languages/php/test_coverage.py",
+                "line": 311
+              }
+            ],
+            "sample": [
+              "):",
+              "            in_string = ch",
+              "            out.append(ch)",
+              "            i += 1"
+            ]
+          },
+          {
+            "id": "dabed492647460eb",
+            "distinct_files": 2,
+            "window_size": 37,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/data/global/DROID.md",
+                "line": 3
+              },
+              {
+                "file": "desloppify/docs/DROID.md",
+                "line": 3
+              }
+            ],
+            "sample": [
+              " Droid Overlay",
+              "",
+              "Droid skills are installed at `.factory/skills/desloppify/SKILL.md`. Droid",
+              "automatically discovers and invokes skills based on the task context,"
+            ]
+          },
+          {
+            "id": "db4e69deeecf4c20",
+            "distinct_files": 2,
+            "window_size": 8,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/detectors/deps_support_render.py",
+                "line": 43
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/detectors/deps/__init__.py",
+                "line": 116
+              }
+            ],
+            "sample": [
+              ":",
+              "            print(json.dumps({\"file\": rel(args.file), **coupling}, indent=2))",
+              "            return",
+              "        print(colorize(f\"\\nDependency info: {rel(args.file)}\\n\", \"bold\"))"
+            ]
+          },
+          {
+            "id": "dc9f8dac9a4d40c6",
+            "distinct_files": 2,
+            "window_size": 19,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/review/test_work_queue_plan_order_and_triage.py",
+                "line": 722
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/work_queue_cases.py",
+                "line": 656
+              }
+            ],
+            "sample": [
+              "]",
+              "    state = _state(",
+              "        objective_issues,",
+              "        dimension_scores={"
+            ]
+          },
+          {
+            "id": "dccc92e9297f9bf4",
+            "distinct_files": 2,
+            "window_size": 11,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/tests/test_py_facade.py",
+                "line": 105
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_facade.py",
+                "line": 89
+              }
+            ],
+            "sample": [
+              ")",
+              "",
+              "        graph = {str(f): _make_graph_entry(importer_count=3)}",
+              "        entries, total = detect_reexport_facades(graph)"
+            ]
+          },
+          {
+            "id": "dd4522a8c937b699",
+            "distinct_files": 2,
+            "window_size": 61,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_attestation.py",
+                "line": 52
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 50
+              }
+            ],
+            "sample": [
+              "if confirmed:",
+              "            stages[name][\"confirmed_at\"] = \"2025-06-01T00:01:00Z\"",
+              "            stages[name][\"confirmed_text\"] = \"I have thoroughly reviewed all the issues in this stage\"",
+              "    return plan"
+            ]
+          },
+          {
+            "id": "ddbec74a4f124135",
+            "distinct_files": 2,
+            "window_size": 11,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/review/integration/test_review_coverage.py",
+                "line": 5
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/test_review_coverage.py",
+                "line": 5
+              }
+            ],
+            "sample": [
+              ". import review_coverage_cases as _cases",
+              "",
+              "for _name in dir(_cases):",
+              "    if not (_name.startswith(\"Test\") or _name.startswith(\"test_\")):"
+            ]
+          },
+          {
+            "id": "df13bb9384c276d4",
+            "distinct_files": 2,
+            "window_size": 11,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/review/integration/test_review_submodules.py",
+                "line": 5
+              },
+              {
+                "file": "desloppify/desloppify/tests/review/test_review_submodules.py",
+                "line": 5
+              }
+            ],
+            "sample": [
+              ". import review_submodules_cases as _cases",
+              "",
+              "for _name in dir(_cases):",
+              "    if not (_name.startswith(\"Test\") or _name.startswith(\"test_\")):"
+            ]
+          },
+          {
+            "id": "dfe39a13814e84c1",
+            "distinct_files": 2,
+            "window_size": 8,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/phases.py",
+                "line": 109
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/phases_basic.py",
+                "line": 48
+              }
+            ],
+            "sample": [
+              "def phase_unused(path: Path, lang: LangRuntimeContract) -> tuple[list[Issue], dict[str, int]]:",
+              "    entries, total_files = unused_detector_mod.detect_unused(path)",
+              "    return make_unused_issues(entries, log), {",
+              "        \"unused\": adjust_potential(lang.zone_map, total_files),"
+            ]
+          },
+          {
+            "id": "e322c2f4c02f3b0b",
+            "distinct_files": 2,
+            "window_size": 10,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_jump_back.py",
+                "line": 46
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_logging.py",
+                "line": 43
+              }
+            ],
+            "sample": [
+              ",",
+              "            \"cited_ids\": [\"r1\", \"r2\", \"r3\"],",
+              "            \"timestamp\": \"2025-06-01T00:00:00Z\",",
+              "            \"issue_count\": 5,"
+            ]
+          },
+          {
+            "id": "e86b5a5255e96db5",
+            "distinct_files": 2,
+            "window_size": 27,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/csharp/commands.py",
+                "line": 72
+              },
+              {
+                "file": "desloppify/desloppify/languages/python/commands.py",
+                "line": 96
+              }
+            ],
+            "sample": [
+              "},",
+              "        ),",
+              "    )",
+              "    if getattr(args, \"json\", False):"
+            ]
+          },
+          {
+            "id": "ea847f98aca6aa25",
+            "distinct_files": 2,
+            "window_size": 8,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/_framework/commands/registry.py",
+                "line": 225
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/commands.py",
+                "line": 164
+              }
+            ],
+            "sample": [
+              ")",
+              "    if getattr(args, \"json\", False):",
+              "        print(json.dumps({\"count\": len(entries), \"entries\": entries}, indent=2))",
+              "        return"
+            ]
+          },
+          {
+            "id": "ea9c06c157e11e4a",
+            "distinct_files": 2,
+            "window_size": 45,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/test_transitive_modules.py",
+                "line": 695
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/test_transitive_modules_update_skill.py",
+                "line": 20
+              }
+            ],
+            "sample": [
+              "class TestBuildSection:",
+              "    def test_skill_only(self):",
+              "        result = _build_section(\"skill content\", None)",
+              "        assert result == \"skill content\\n\""
+            ]
+          },
+          {
+            "id": "eaf432116e342f5c",
+            "distinct_files": 2,
+            "window_size": 71,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_fold_confirm.py",
+                "line": 59
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_jump_back.py",
+                "line": 64
+              }
+            ],
+            "sample": [
+              "plan = _plan_with_stages(*stage_names, confirmed=confirmed)",
+              "    plan[\"clusters\"][\"fix-naming\"] = {",
+              "        \"name\": \"fix-naming\",",
+              "        \"issue_ids\": [\"r1\", \"r2\", \"r3\", \"r4\", \"r5\"],"
+            ]
+          },
+          {
+            "id": "ec59f5ed146375d2",
+            "distinct_files": 2,
+            "window_size": 6,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_attestation.py",
+                "line": 294
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_confirmation.py",
+                "line": 154
+              }
+            ],
+            "sample": [
+              "args = _fake_args(confirm=\"observe\", attestation=attestation)",
+              "        triage_mod.cmd_plan_triage(args)",
+              "        out = capsys.readouterr().out",
+              "        assert \"confirmed\" in out.lower()"
+            ]
+          },
+          {
+            "id": "ec8d1eff6a442dab",
+            "distinct_files": 2,
+            "window_size": 5,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/backlog/cmd.py",
+                "line": 7
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/show/cmd.py",
+                "line": 10
+              }
+            ],
+            "sample": [
+              "from desloppify.app.commands.helpers.lang import resolve_lang",
+              "from desloppify.app.commands.helpers.query import write_query",
+              "from desloppify.app.commands.helpers.command_runtime import command_runtime",
+              "from desloppify.app.commands.helpers.state import require_issue_inventory"
+            ]
+          },
+          {
+            "id": "ed6e68b5d642adbb",
+            "distinct_files": 2,
+            "window_size": 12,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/python/detectors/private_imports.py",
+                "line": 38
+              },
+              {
+                "file": "desloppify/desloppify/languages/python/detectors/uncalled.py",
+                "line": 34
+              }
+            ],
+            "sample": [
+              "def _is_test_file(filepath: str) -> bool:",
+              "    \"\"\"True when a file path clearly points to test code.\"\"\"",
+              "    normalized = filepath.replace(\"\\\\\", \"/\")",
+              "    basename = os.path.basename(normalized)"
+            ]
+          },
+          {
+            "id": "ed8647e15f5392f4",
+            "distinct_files": 2,
+            "window_size": 8,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/javascript/tests/test_js_nextjs_framework.py",
+                "line": 36
+              },
+              {
+                "file": "desloppify/desloppify/languages/typescript/tests/test_ts_nextjs_framework.py",
+                "line": 187
+              }
+            ],
+            "sample": [
+              ")",
+              "    labels = [getattr(p, \"label\", \"\") for p in cfg.phases]",
+              "    assert \"Next.js framework smells\" in labels",
+              "    lint = next(p for p in cfg.phases if getattr(p, \"label\", \"\") == \"next lint\")"
+            ]
+          },
+          {
+            "id": "eece057581360329",
+            "distinct_files": 2,
+            "window_size": 18,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/php/test_coverage.py",
+                "line": 300
+              },
+              {
+                "file": "desloppify/desloppify/languages/r/test_coverage.py",
+                "line": 142
+              }
+            ],
+            "sample": [
+              "if in_string is not None:",
+              "            out.append(ch)",
+              "            if ch == \"\\\\\" and i + 1 < len(content):",
+              "                out.append(content[i + 1])"
+            ]
+          },
+          {
+            "id": "ef0459ee05b286b6",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/gdscript/detectors/deps.py",
+                "line": 14
+              },
+              {
+                "file": "desloppify/desloppify/languages/gdscript/test_coverage.py",
+                "line": 20
+              }
+            ],
+            "sample": [
+              "def _find_project_root(path: Path) -> Path:",
+              "    cursor = path if path.is_dir() else path.parent",
+              "    for candidate in (cursor, *cursor.parents):",
+              "        if (candidate / \"project.godot\").is_file():"
+            ]
+          },
+          {
+            "id": "f0c08261c886b3bc",
+            "distinct_files": 2,
+            "window_size": 23,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/stages/reflect.py",
+                "line": 31
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/validation/core.py",
+                "line": 143
+              }
+            ],
+            "sample": [
+              ",",
+              ") -> bool:",
+              "    if not recurring_dims:",
+              "        return True"
+            ]
+          },
+          {
+            "id": "f1a3c1a27c34dc06",
+            "distinct_files": 2,
+            "window_size": 20,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/data/global/WINDSURF.md",
+                "line": 3
+              },
+              {
+                "file": "desloppify/docs/WINDSURF.md",
+                "line": 3
+              }
+            ],
+            "sample": [
+              " Windsurf Overlay",
+              "",
+              "Windsurf does not support spawning subagents from within a Cascade session.",
+              "If not using the batch runner, parallel reviews require the user to open"
+            ]
+          },
+          {
+            "id": "f25896fa200d120f",
+            "distinct_files": 2,
+            "window_size": 10,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/cxx/extractors.py",
+                "line": 117
+              },
+              {
+                "file": "desloppify/desloppify/languages/rust/extractors.py",
+                "line": 134
+              }
+            ],
+            "sample": [
+              ",",
+              "                line=start_line,",
+              "                end_line=end_line,",
+              "                loc=max(1, end_line - start_line + 1),"
+            ]
+          },
+          {
+            "id": "f2e5a4df9e24fce5",
+            "distinct_files": 2,
+            "window_size": 6,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/confirmations/strategize.py",
+                "line": 76
+              },
+              {
+                "file": "desloppify/desloppify/app/commands/plan/triage/display/dashboard.py",
+                "line": 258
+              }
+            ],
+            "sample": [
+              "= [",
+              "        str(entry.get(\"name\", \"\")).strip()",
+              "        for entry in briefing.get(\"focus_dimensions\", [])",
+              "        if isinstance(entry, dict) and str(entry.get(\"name\", \"\")).strip()"
+            ]
+          },
+          {
+            "id": "f6442653212cf5e4",
+            "distinct_files": 2,
+            "window_size": 63,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/data/global/HERMES.md",
+                "line": 3
+              },
+              {
+                "file": "desloppify/docs/HERMES.md",
+                "line": 3
+              }
+            ],
+            "sample": [
+              " Hermes Agent Overlay",
+              "",
+              "Hermes has built-in parallel subagent support via `delegate_task` (up to 3",
+              "concurrent children). Use `delegate_task(tasks=[...])` for subjective review"
+            ]
+          },
+          {
+            "id": "f6856bb01a788a76",
+            "distinct_files": 2,
+            "window_size": 8,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/dart/detectors/deps.py",
+                "line": 79
+              },
+              {
+                "file": "desloppify/desloppify/languages/gdscript/detectors/deps.py",
+                "line": 44
+              }
+            ],
+            "sample": [
+              "(path)",
+              "    abs_files = [str(Path(resolve_path(filepath)).resolve()) for filepath in files]",
+              "    graph = {filepath: {\"imports\": set(), \"importers\": set()} for filepath in abs_files}",
+              "    if not graph:"
+            ]
+          },
+          {
+            "id": "f6c292666b3e79f1",
+            "distinct_files": 2,
+            "window_size": 12,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_cluster_ux.py",
+                "line": 28
+              },
+              {
+                "file": "desloppify/desloppify/tests/commands/plan/test_triage_auto_start.py",
+                "line": 31
+              }
+            ],
+            "sample": [
+              ": {}}",
+              "",
+              "",
+              "def _fake_runtime(state: dict):"
+            ]
+          },
+          {
+            "id": "f761c575e8b5b5fb",
+            "distinct_files": 2,
+            "window_size": 15,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/engine/_state/filtering.py",
+                "line": 39
+              },
+              {
+                "file": "desloppify/desloppify/engine/_state/resolution.py",
+                "line": 27
+              }
+            ],
+            "sample": [
+              "def _preserve_integrity_target(state: StateModel) -> float | None:",
+              "    \"\"\"Extract the current subjective integrity target so recompute doesn't erase it.\"\"\"",
+              "    integrity = state.get(\"subjective_integrity\")",
+              "    if not isinstance(integrity, dict):"
+            ]
+          },
+          {
+            "id": "fca8d4620883ef71",
+            "distinct_files": 2,
+            "window_size": 9,
+            "locations": [
+              {
+                "file": "desloppify/desloppify/languages/gdscript/__init__.py",
+                "line": 9
+              },
+              {
+                "file": "desloppify/desloppify/languages/rust/__init__.py",
+                "line": 8
+              }
+            ],
+            "sample": [
+              ",",
+              "    detector_phase_test_coverage,",
+              "    shared_subjective_duplicates_tail,",
+              ")"
+            ]
+          }
+        ]
+      },
+      "security": {
+        "version": 1,
+        "fingerprint": "0d1a40e49b5ba77b2de25819a6698b610d9ad61d",
+        "entries": [],
+        "files_scanned": 0,
+        "coverage": null
+      },
+      "dupes": {}
+    }
+  },
+  "lang_capabilities": {
+    "javascript": {
+      "fixers": [
+        "eslint-warning"
+      ],
+      "typecheck_cmd": ""
+    }
+  },
+  "zone_distribution": {},
+  "tool_hash": "79acd85e4a2b",
+  "scan_path": ".",
+  "scan_completeness": {
+    "javascript": "full"
+  },
+  "potentials": {
+    "javascript": {
+      "structural": 0,
+      "flat_dirs": 0,
+      "security": 0,
+      "single_use": 0,
+      "cycles": 0,
+      "orphaned": 0,
+      "test_coverage": 0,
+      "boilerplate_duplication": 0,
+      "dupes": 0,
+      "stale_wontfix": 0
+    }
+  },
+  "codebase_metrics": {
+    "javascript": {
+      "total_files": 0,
+      "total_loc": 0,
+      "total_directories": 0
+    }
+  },
+  "dimension_scores": {},
+  "reminder_history": {
+    "badge_recommendation": 2,
+    "report_scores": 2,
+    "review_not_run": 2,
+    "feedback_nudge": 1
+  }
+}
