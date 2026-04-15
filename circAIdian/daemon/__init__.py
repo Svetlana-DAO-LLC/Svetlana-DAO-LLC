@@ -7,7 +7,7 @@ from .nudge_engine import NudgeEngine, Nudge, NudgePriority, NudgeCategory
 from .api import CircadianAPI
 
 # CircadianConfig lives in config/__init__.py — re-export for convenience.
-from config import CircadianConfig  # noqa: F401
+from circAIdian.config import CircadianConfig  # noqa: F401
 
 # ActiveContextManager lives in context.tier_manager — re-export for convenience.
-from context.tier_manager import ActiveContextManager, ContextChunk, ContextTier  # noqa: F401
+from circAIdian.context.tier_manager import ActiveContextManager, ContextChunk, ContextTier  # noqa: F401

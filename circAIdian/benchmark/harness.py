@@ -1,10 +1,11 @@
 """
 CircAIdian Memory Benchmark Harness — LoCoMo-style evaluation.
 
-Supports three retrieval modes:
-  --mode bm25  : Pure BM25 keyword retrieval (baseline)
-  --mode hyde  : HYDE (Hypothetical Document Embeddings) + BM25
-  --mode qmd   : QMD hybrid lex+vec+hyde retrieval (CPU-constrained)
+Supports four retrieval modes:
+  --mode bm25    : Pure BM25 keyword retrieval (baseline)
+  --mode hyde    : HYDE (M2.7 hypothetical answer) + BM25
+  --mode custom  : BM25 → HYDE → Subconscious dream (M2.7) → M2.7 rerank
+  --mode qmd     : QMD hybrid lex+vec+hyde retrieval (CPU-constrained)
 
 Metrics:
 1. Memory Accuracy — Does the agent correctly answer questions about disclosed facts?
@@ -32,6 +33,7 @@ from benchmark.locomo_simulated import SCENARIOS, ConversationScenario
 from benchmark.bm25 import bm25_retrieve
 from benchmark.hyde_retrieval import HYDEBM25Retrieval, hyde_retrieve_async
 from benchmark.qmd_retrieval import QMDRetrieval
+from benchmark.custom_retrieval import CircAIdianRetrieval, CircAIdianLightRetrieval
 
 
 class MemoryBenchmarkHarness:
@@ -44,13 +46,14 @@ class MemoryBenchmarkHarness:
 
     async def load_scenario(
         self, scenario: ConversationScenario
-    ) -> Tuple[ActiveContextManager, Optional[HYDEBM25Retrieval], Optional[QMDRetrieval]]:
+    ) -> Tuple[ActiveContextManager, Optional[HYDEBM25Retrieval], Optional[QMDRetrieval], Optional[CircAIdianLightRetrieval]]:
         """
         Load a scenario's conversation turns into the context manager.
 
-        Returns (cm, hyde_retriever, qmd_retriever).
+        Returns (cm, hyde_retriever, qmd_retriever, custom_retriever).
         hyde_retriever is built (and indexed) for HYDE mode.
         qmd_retriever is built (and indexed) for QMD mode.
+        custom_retriever is built for custom mode (M2.7 rerank).
         Caller must call close() on any non-None retriever.
         """
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -75,18 +78,28 @@ class MemoryBenchmarkHarness:
 
             hyde: Optional[HYDEBM25Retrieval] = None
             qmd: Optional[QMDRetrieval] = None
+            custom: Optional[CircAIdianLightRetrieval] = None
 
-            if self.mode in ("hyde", "qmd") and chunks:
+            if self.mode in ("hyde", "qmd", "custom") and chunks:
                 if self.mode == "hyde":
                     hyde = HYDEBM25Retrieval()
                     hyde.index(chunk_tuples)
                 elif self.mode == "qmd":
-                    qmd = QMDRetrieval(collection_name=f"bench-{scenario.scenario_id}")
-                    if not qmd.index_chunks(chunk_tuples):
+                    # Use the persistent locomo-bench collection (not per-scenario).
+                    # It must exist and contain the scenario's chunk files.
+                    # We skip index_chunks (which cleans up) and instead
+                    # just verify the collection is registered and query it.
+                    qmd = QMDRetrieval(collection_name="locomo-bench", persistent=True)
+                    if qmd.query("__ping__", top_k=1):
+                        qmd._indexed = True
+                    else:
                         qmd.close()
                         qmd = None
+                elif self.mode == "custom":
+                    custom = CircAIdianLightRetrieval()
+                    custom.index(chunk_tuples)
 
-            return cm, hyde, qmd
+            return cm, hyde, qmd, custom
 
     def _retrieve_bm25(self, cm: ActiveContextManager, query: str) -> str:
         chunks = cm.get_all_chunks()
@@ -120,11 +133,19 @@ class MemoryBenchmarkHarness:
             return ""
         return await hyde.query_async(query, top_k=5)
 
+    async def _retrieve_custom(
+        self, cm: ActiveContextManager, query: str, custom: Optional[CircAIdianLightRetrieval]
+    ) -> str:
+        if custom is None:
+            return self._retrieve_bm25(cm, query)
+        return await custom.query_async(query, top_k=5)
+
     async def _evaluate(
         self,
         cm: ActiveContextManager,
         hyde: Optional[HYDEBM25Retrieval],
         qmd: Optional[QMDRetrieval],
+        custom: Optional[CircAIdianLightRetrieval],
         scenario: ConversationScenario,
     ) -> Dict:
         """Internal evaluation (caller manages retriever lifecycles)."""
@@ -138,6 +159,8 @@ class MemoryBenchmarkHarness:
                 ctx = self._retrieve_bm25(cm, qa.question)
             elif self.mode == "hyde":
                 ctx = await self._retrieve_hyde(cm, qa.question, hyde)
+            elif self.mode == "custom":
+                ctx = await self._retrieve_custom(cm, qa.question, custom)
             else:  # qmd
                 ctx = self._retrieve_qmd(cm, qa.question, qmd)
             retrieved_contexts.append(ctx)
@@ -206,14 +229,16 @@ class MemoryBenchmarkHarness:
         }
 
     async def evaluate_scenario(self, scenario: ConversationScenario) -> Dict:
-        cm, hyde, qmd = await self.load_scenario(scenario)
+        cm, hyde, qmd, custom = await self.load_scenario(scenario)
         try:
-            return await self._evaluate(cm, hyde, qmd, scenario)
+            return await self._evaluate(cm, hyde, qmd, custom, scenario)
         finally:
             if hyde is not None:
                 pass  # HYDE is stateless, no close needed
             if qmd is not None:
                 qmd.close()
+            if custom is not None:
+                pass  # stateless
 
     async def run(self) -> Dict:
         print("=" * 60)
@@ -273,8 +298,8 @@ class MemoryBenchmarkHarness:
 async def main():
     parser = argparse.ArgumentParser(description="CircAIdian LoCoMo benchmark")
     parser.add_argument(
-        "--mode", choices=["bm25", "hyde", "qmd"], default="hyde",
-        help="Retrieval mode: bm25 (baseline), hyde (HYDE+BM25), qmd (QMD hybrid)"
+        "--mode", choices=["bm25", "hyde", "custom", "qmd"], default="hyde",
+        help="Retrieval mode: bm25 (baseline), hyde (HYDE+BM25), custom (M2.7 rerank), qmd (QMD hybrid)"
     )
     args = parser.parse_args()
 

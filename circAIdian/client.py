@@ -2,7 +2,7 @@
 CircAIdian client library — for main agent integration.
 
 Usage:
-    from circadian.client import CircadianClient
+    from circAIdian.client import CircadianClient
 
     async with CircadianClient() as client:
         await client.observe("session_1", "user message", "agent response")

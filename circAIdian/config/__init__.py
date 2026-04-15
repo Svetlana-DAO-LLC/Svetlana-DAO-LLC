@@ -20,9 +20,9 @@ class CircadianConfig:
     soul_path: str = "/home/hermes/.hermes/SOUL.md"
     memories_path: str = "/home/hermes/.hermes/memories"
     bank_path: str = "/home/hermes/repos/jr-artifacts/hermes-bank/bank"
-    corrections_db_path: str = "/home/hermes/.hermes/circadian_corrections.db"
-    dream_log_path: str = "/home/hermes/.hermes/circadian_dreams.log"
-    nudge_log_path: str = "/home/hermes/.hermes/circadian_nudges.log"
+    corrections_db_path: str = "/home/hermes/.hermes/circAIdian_corrections.db"
+    dream_log_path: str = "/home/hermes/.hermes/circAIdian_dreams.log"
+    nudge_log_path: str = "/home/hermes/.hermes/circAIdian_nudges.log"
     # Intervals (seconds)
     correction_batch_interval: int = 60
     idle_check_interval: int = 30
@@ -65,9 +65,9 @@ class CircadianConfig:
             soul_path=os.getenv("CIRCADIAN_SOUL_PATH", "/home/hermes/.hermes/SOUL.md"),
             memories_path=os.getenv("CIRCADIAN_MEMORIES_PATH", "/home/hermes/.hermes/memories"),
             bank_path=os.getenv("CIRCADIAN_BANK_PATH", "/home/hermes/repos/jr-artifacts/hermes-bank/bank"),
-            corrections_db_path=os.getenv("CIRCADIAN_DB_PATH", "/home/hermes/.hermes/circadian_corrections.db"),
-            dream_log_path=os.getenv("CIRCADIAN_DREAM_LOG", "/home/hermes/.hermes/circadian_dreams.log"),
-            nudge_log_path=os.getenv("CIRCADIAN_NUDGE_LOG", "/home/hermes/.hermes/circadian_nudges.log"),
+            corrections_db_path=os.getenv("CIRCADIAN_DB_PATH", "/home/hermes/.hermes/circAIdian_corrections.db"),
+            dream_log_path=os.getenv("CIRCADIAN_DREAM_LOG", "/home/hermes/.hermes/circAIdian_dreams.log"),
+            nudge_log_path=os.getenv("CIRCADIAN_NUDGE_LOG", "/home/hermes/.hermes/circAIdian_nudges.log"),
             correction_batch_interval=int(os.getenv("CIRCADIAN_BATCH_INTERVAL", "60")),
             idle_check_interval=int(os.getenv("CIRCADIAN_IDLE_CHECK_INTERVAL", "30")),
             dream_cycle_interval=int(os.getenv("CIRCADIAN_DREAM_INTERVAL", "300")),
