@@ -97,7 +97,7 @@ class MemoryBenchmarkHarness:
                         qmd = None
                 elif self.mode == "custom":
                     custom = CircAIdianLightRetrieval()
-                    custom.index(chunk_tuples)
+                    await custom.index_async(chunk_tuples, turns=scenario.turns)
 
             return cm, hyde, qmd, custom
 

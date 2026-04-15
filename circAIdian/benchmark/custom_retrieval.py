@@ -92,6 +92,14 @@ SUBconscious_SYSTEM = (
     "Be concise. Output 3-5 sentences of free association."
 )
 
+GROUNDED_HYDE_SYSTEM = (
+    "You are a hypothetical answer generator. Given a question about "
+    "a person's preferences, history, habits, opinions, or other personal facts, "
+    "generate a realistic hypothetical answer as if that person had answered the "
+    "question themselves. Keep answers brief (1-3 sentences) and plausible.\n"
+    "Do NOT say 'I don\\'t know' or 'undisclosed' or 'I\\'m an AI'."
+)
+
 
 def generate_subconscious_dream(turns: List[Tuple[str, str]], current_query: str) -> str:
     """
@@ -112,6 +120,60 @@ def generate_subconscious_dream(turns: List[Tuple[str, str]], current_query: str
     )
     result = _call_minimax(prompt, max_tokens=300)
     return result or ""
+
+
+def generate_grounded_hypothetical_answer(
+    query: str,
+    turns: List[Tuple[str, str]],
+    dream: str,
+    top_chunk_content: str = "",
+) -> str:
+    """
+    Generate a hypothetical answer grounded in the conversation context and dream themes.
+
+    Uses the dream narrative, conversation turns, and the top BM25 chunk's content
+    to anchor the HYDE generation — so it produces contextually specific answers
+    rather than generic motivational text.
+    """
+    # Format turns for the model
+    turns_text = "\n".join(
+        f"User: {u}\nAgent: {a}" for u, a in turns[-10:]  # last 10 turns for focus
+    )
+    chunk_context = f"\nMost relevant conversation excerpt:\n{top_chunk_content}\n" if top_chunk_content else ""
+    prompt = (
+        f"{GROUNDED_HYDE_SYSTEM}\n\n"
+        f"CONVERSATION CONTEXT:\n{turns_text}\n\n"
+        f"CONVERSATION THEMES (from subconscious analysis):\n{dream}\n"
+        f"{chunk_context}"
+        f"Question: {query}\n"
+        f"Hypothetical Answer (grounded in the conversation above):"
+    )
+    result = _call_minimax(prompt, max_tokens=200)
+    return result or ""
+
+
+async def generate_subconscious_dream_async(
+    turns: List[Tuple[str, str]],
+    current_query: str,
+) -> str:
+    """Async wrapper."""
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(
+        None, generate_subconscious_dream, turns, current_query
+    )
+
+
+async def generate_grounded_hypothetical_answer_async(
+    query: str,
+    turns: List[Tuple[str, str]],
+    dream: str,
+    top_chunk_content: str = "",
+) -> str:
+    """Async wrapper."""
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(
+        None, generate_grounded_hypothetical_answer, query, turns, dream, top_chunk_content
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -315,40 +377,98 @@ class CircAIdianLightRetrieval:
         self._chunk_map: dict = {}
         self._hyde_cache: dict = {}
 
-    def index(self, chunks: List[Tuple[str, str]]):
+    async def index_async(self, chunks: List[Tuple[str, str]], turns: List[Tuple[str, str]] = None):
+        """Async index — generates subconscious dream once. Call before query_async."""
         if not chunks:
             return
         self._chunks = chunks
+        self._turns = turns or []
         self._chunk_map = {cid: content for cid, content in chunks}
         doc_ids = [cid for cid, _ in chunks]
         doc_texts = [content for _, content in chunks]
         self._ranker = BM25(k1=1.5, b=0.75)
         self._ranker.index(doc_ids, doc_texts)
 
+        # Generate subconscious dream ONCE at index time — not per query
+        self._dream_cache: dict = {}
+        if self._turns:
+            self._dream_cache["__global__"] = await generate_subconscious_dream_async(
+                self._turns, ""
+            )
+
+    def index(self, chunks: List[Tuple[str, str]], turns: List[Tuple[str, str]] = None):
+        """Sync wrapper — indexes chunks and generates dream in background thread."""
+        if not chunks:
+            return
+        self._chunks = chunks
+        self._turns = turns or []
+        self._chunk_map = {cid: content for cid, content in chunks}
+        doc_ids = [cid for cid, _ in chunks]
+        doc_texts = [content for _, content in chunks]
+        self._ranker = BM25(k1=1.5, b=0.75)
+        self._ranker.index(doc_ids, doc_texts)
+
+        # Generate subconscious dream once in background thread
+        if self._turns:
+            loop = asyncio.get_event_loop()
+            self._dream_cache = {}
+            self._dream_cache["__global__"] = loop.run_in_executor(
+                None, generate_subconscious_dream, self._turns, ""
+            )
+
     async def query_async(self, query: str, top_k: int = 5) -> str:
         if not self._ranker:
             return ""
+
+        # ---- Get dream (generated once at index time) ----
+        dream = ""
+        if hasattr(self, "_dream_cache") and self._dream_cache:
+            dream_result = self._dream_cache.get("__global__")
+            if asyncio.iscoroutine(dream_result):
+                dream_result = await dream_result
+            elif hasattr(dream_result, "result"):
+                dream_result = dream_result.result()
+            dream = dream_result if isinstance(dream_result, str) else ""
 
         # ---- Stage 1: BM25 baseline ----
         bm25_results = self._ranker.retrieve(query, top_k=top_k * 4)
         bm25_scores = [s for _, s in bm25_results]
         bm25_cids = [cid for cid, _ in bm25_results]
 
-        # ---- Stage 2: HYDE expansion (M2.7) ----
-        if query not in self._hyde_cache:
-            loop = asyncio.get_event_loop()
-            self._hyde_cache[query] = await loop.run_in_executor(
-                None, generate_hypothetical_answer, query
-            )
-        hyde_doc = self._hyde_cache[query]
+        # ---- Stage 2: GROUNDED HYDE expansion (M2.7) ----
+        # If we have dream context, use grounded HYDE; otherwise fall back
+        # Strategy: generate HYDE from the top BM25 chunk's content directly.
+        # This anchors the hypothetical answer to actual conversation text,
+        # bridging the "goal"→"bulk" gap more reliably than pure query→HYDE.
+        top_chunk_content = ""
+        if bm25_cids and self._chunk_map:
+            top_chunk_content = self._chunk_map.get(bm25_cids[0], "")[:500]
 
+        if self._turns and dream:
+            if query not in self._hyde_cache:
+                self._hyde_cache[query] = await generate_grounded_hypothetical_answer_async(
+                    query, self._turns, dream, top_chunk_content
+                )
+        else:
+            if query not in self._hyde_cache:
+                self._hyde_cache[query] = await asyncio.get_event_loop().run_in_executor(
+                    None, generate_hypothetical_answer, query
+                )
+        hyde_doc = self._hyde_cache[query]
+        if isinstance(hyde_doc, str):
+            hyde_doc = hyde_doc
+
+        # NOTE: Dream terms are NOT injected into BM25 query — descriptive dream prose
+        # contains too much noise for keyword matching. Grounded HYDE already uses the
+        # dream as semantic context during hypothetical answer generation, providing
+        # the same benefit without BM25 pollution. This was validated: injecting full
+        # dream text caused music_hobbies to drop from 100% to 88%.
         search_query = f"{query} {hyde_doc}".strip() if hyde_doc else query
         hyde_results = self._ranker.retrieve(search_query, top_k=top_k * 4)
         hyde_scores = [s for _, s in hyde_results]
         hyde_cids = [cid for cid, _ in hyde_results]
 
         # ---- Fuse: BM25*0.4 + HYDE*0.6 ----
-        # Balance keyword precision with semantic expansion
         fused = {}
         for cid, s in zip(bm25_cids, bm25_scores):
             fused[cid] = fused.get(cid, 0.0) + s * 0.4
